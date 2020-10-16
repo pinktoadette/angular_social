@@ -17,7 +17,7 @@ export class AuthService {
       shareReplay(),
       tap((res: HttpResponse<any>) => {
         // the auth tokens will be in the header of this response
-        this.setSession(res.body._id, res.headers.get('x-access-token'), res.headers.get('x-refresh-token'));
+        this.setSession(res.body._id, res.headers.get('X-Access-Token'), res.headers.get('x-refresh-token'));
         console.log("LOGGED IN!");
       })
     )
@@ -29,7 +29,7 @@ export class AuthService {
       shareReplay(),
       tap((res: HttpResponse<any>) => {
         // the auth tokens will be in the header of this response
-        this.setSession(res.body._id, res.headers.get('x-access-token'), res.headers.get('x-refresh-token'));
+        this.setSession(res.body._id, res.headers.get('X-Access-Token'), res.headers.get('x-refresh-token'));
         console.log("Successfully signed up and now logged in!");
       })
     )
@@ -44,7 +44,7 @@ export class AuthService {
   }
 
   getAccessToken() {
-    return localStorage.getItem('x-access-token');
+    return localStorage.getItem('X-Access-Token');
   }
 
   getRefreshToken() {
@@ -56,18 +56,18 @@ export class AuthService {
   }
 
   setAccessToken(accessToken: string) {
-    localStorage.setItem('x-access-token', accessToken)
+    localStorage.setItem('X-Access-Token', accessToken)
   }
   
   private setSession(userId: string, accessToken: string, refreshToken: string) {
     localStorage.setItem('user-id', userId);
-    localStorage.setItem('x-access-token', accessToken);
+    localStorage.setItem('X-Access-Token', accessToken);
     localStorage.setItem('x-refresh-token', refreshToken);
   }
 
   private removeSession() {
     localStorage.removeItem('user-id');
-    localStorage.removeItem('x-access-token');
+    localStorage.removeItem('X-Access-Token');
     localStorage.removeItem('x-refresh-token');
   }
 
@@ -80,7 +80,7 @@ export class AuthService {
       observe: 'response'
     }).pipe(
       tap((res: HttpResponse<any>) => {
-        this.setAccessToken(res.headers.get('x-access-token'));
+        this.setAccessToken(res.headers.get('X-Access-Token'));
       })
     )
   }

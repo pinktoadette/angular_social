@@ -13,6 +13,9 @@ import { WebReqInterceptor } from './shared/services/web-req.interceptor';
 import { SignupPageComponent } from './signup-page/signup-page.component';
 import { EditListComponent } from './pages/edit-list/edit-list.component';
 import { EditTaskComponent } from './pages/edit-task/edit-task.component';
+import { PoolsComponent } from './shared/components/pools/pools.component';
+import { NavbarComponent } from './shared/components/navbar/navbar.component';
+import { FeedModule } from './feed/feed.module';
 
 @NgModule({
   declarations: [
@@ -23,12 +26,15 @@ import { EditTaskComponent } from './pages/edit-task/edit-task.component';
     LoginPageComponent,
     SignupPageComponent,
     EditListComponent,
-    EditTaskComponent
+    EditTaskComponent,
+    PoolsComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FeedModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: WebReqInterceptor, multi: true }
