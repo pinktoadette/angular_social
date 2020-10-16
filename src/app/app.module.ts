@@ -8,9 +8,9 @@ import { TaskViewComponent } from './pages/task-view/task-view.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NewListComponent } from './pages/new-list/new-list.component';
 import { NewTaskComponent } from './pages/new-task/new-task.component';
-import { LoginPageComponent } from './pages/login-page/login-page.component';
+import { LoginPageComponent } from './login-page/login-page.component';
 import { WebReqInterceptor } from './shared/services/web-req.interceptor';
-import { SignupPageComponent } from './pages/signup-page/signup-page.component';
+import { SignupPageComponent } from './signup-page/signup-page.component';
 import { EditListComponent } from './pages/edit-list/edit-list.component';
 import { EditTaskComponent } from './pages/edit-task/edit-task.component';
 

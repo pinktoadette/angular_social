@@ -30,7 +30,7 @@ export class WebRequestService {
   }
 
   login(email: string, password: string) {
-    return this.http.post(`${this.ROOT_URL}/users/login`, {
+    return this.http.post(`${this.ROOT_URL}/login`, {
       email,
       password
     }, {
@@ -39,10 +39,12 @@ export class WebRequestService {
   }
 
   signup(email: string, password: string) {
-    return this.http.post(`${this.ROOT_URL}/register`, {
+    const body= {
       email,
       password
-    }, {
+    };
+
+    return this.http.post(`${this.ROOT_URL}/register`, body, {
         observe: 'response'
       });
   }
