@@ -1,9 +1,9 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { HashtagService } from '../../services/hashtag.service';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import { map, startWith } from 'rxjs/operators';
+import { map, startWith, takeUntil } from 'rxjs/operators';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 
@@ -12,7 +12,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
   templateUrl: './poll-form.component.html',
   styleUrls: ['./poll-form.component.scss']
 })
-export class PollFormComponent implements OnInit {
+export class PollFormComponent implements OnInit, OnDestroy{
   @ViewChild('hashtagInput') hashtagInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
   
@@ -30,6 +30,7 @@ export class PollFormComponent implements OnInit {
   hashtags: string[] = [];
   allHashtags: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
 
+  _unsubscribe = new Subject<any>();
 
   constructor(
     private hashtagService: HashtagService
@@ -86,10 +87,19 @@ export class PollFormComponent implements OnInit {
     this.hashtagCtrl.setValue(null);
   }
 
+  ngOnDestroy() {
+    this._unsubscribe.next();
+    this._unsubscribe.complete();
+  }
+  
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-
-    return this.allHashtags.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
+    let tags;
+    this.hashtagService.getHashTags(value).pipe(takeUntil(this._unsubscribe)).subscribe(result => {
+      tags = result;
+    })
+    return tags
+    // return this.allHashtags.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
   }
 
   private _checkUrl(url) {

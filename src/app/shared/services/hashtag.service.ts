@@ -10,7 +10,7 @@ export class HashtagService {
     private webReqService: WebRequestService
   ) { }
 
-  getHashTags(text) {
-    return this.webReqService.post('hashtags',{text})
+  getHashTags(hashtag) {
+    return this.webReqService.post('hashtags',{hashtag})
   }
 }
