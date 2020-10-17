@@ -1,9 +1,13 @@
 <article class="media" (click)="articleDetails()">
-    <figure class="media-left">
-      <p class="image is-128x128">
-        <img src="https://material.angular.io/assets/img/examples/shiba2.jpg">
-      </p>
-    </figure>
+  <ng-container *ngIf="innerWidth > 767; else norm">
+    <div>
+      <figure class="media-left">
+        <p class="image is-128x128">
+          <img src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+        </p>
+      </figure>
+    </div>
+    
     <div class="media-content">
       <div class="content">
         <p>
@@ -15,8 +19,18 @@
       </div>
       <app-nav-poll></app-nav-poll>
     </div>
-    <!-- <div class="media-right">
-      <button class="delete"></button>
-    </div> -->
-    <hr>
+  </ng-container>
+
+  <ng-template #norm>
+      <div class="content">
+            <strong>Article Title</strong> 
+            <br><small>Domain Source</small>
+            <br>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.
+          <figure class="image is-3by1 center-cropped">
+              <img src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+          </figure>
+        <app-nav-poll></app-nav-poll>
+      </div>
+  </ng-template>
   </article>

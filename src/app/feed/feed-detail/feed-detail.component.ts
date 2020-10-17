@@ -1,5 +1,5 @@
 import { Route } from '@angular/compiler/src/core';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
@@ -9,11 +9,17 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 })
 export class FeedDetailComponent implements OnInit {
   @Input() articleId: number;
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerWidth = window.innerWidth;
+  }
+  innerWidth: number;
   constructor(
     private route: Router
   ) { }
 
   ngOnInit(): void {
+    this.innerWidth = window.innerWidth;
   }
 
   articleDetails() {
