@@ -1,17 +1,14 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-2">
-          1 of 3
-        </div>
-        <div class="col-md-6">
+        <div class="col-md-8">
           <h1 class="h1">Trending</h1>
-          <app-feed-detail></app-feed-detail>
-          <app-feed-detail></app-feed-detail>
-          <app-feed-detail></app-feed-detail>
-          <app-feed-detail></app-feed-detail>
+          <app-feed-detail [articleId]="1"></app-feed-detail>
+          <app-feed-detail [articleId]="2"></app-feed-detail>
+          <app-feed-detail [articleId]="3"></app-feed-detail>
+          <app-feed-detail [articleId]="4"></app-feed-detail>
         </div>
         <div class="col-md-4">
-          Submit Source:
+          <app-poll-form></app-poll-form>
         </div>
       </div>
 </div>

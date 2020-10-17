@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PoolsComponent } from './pools.component';
+import { NavPollComponent } from './nav-poll.component';
 
-describe('PoolsComponent', () => {
-  let component: PoolsComponent;
-  let fixture: ComponentFixture<PoolsComponent>;
+describe('NavPollComponent', () => {
+  let component: NavPollComponent;
+  let fixture: ComponentFixture<NavPollComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PoolsComponent ]
+      declarations: [ NavPollComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PoolsComponent);
+    fixture = TestBed.createComponent(NavPollComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

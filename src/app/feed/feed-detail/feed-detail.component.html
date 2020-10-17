@@ -1,10 +1,22 @@
-<mat-card>
-    <mat-card-title>New Title</mat-card-title>
-    <mat-card-subtitle>Source: url</mat-card-subtitle>
-    <mat-card-content>
-        SEO url content
-        <p></p>
-        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-    </mat-card-content>
-
-</mat-card>
+<article class="media" (click)="articleDetails()">
+    <figure class="media-left">
+      <p class="image is-128x128">
+        <img src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+      </p>
+    </figure>
+    <div class="media-content">
+      <div class="content">
+        <p>
+          <strong>Article Title</strong> 
+          <br><small>Domain Source</small>
+          <br>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.
+        </p>
+      </div>
+      <app-nav-poll></app-nav-poll>
+    </div>
+    <!-- <div class="media-right">
+      <button class="delete"></button>
+    </div> -->
+    <hr>
+  </article>
