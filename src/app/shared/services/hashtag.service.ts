@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { tap } from 'rxjs/operators';
 import { WebRequestService } from './web-request.service';
 
 @Injectable({
@@ -11,6 +12,6 @@ export class HashtagService {
   ) { }
 
   getHashTags(hashtag) {
-    return this.webReqService.post('hashtags',{hashtag})
+    return this.webReqService.post('hashtags',{hashtag}).pipe(tap(data => data))
   }
 }

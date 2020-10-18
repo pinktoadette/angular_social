@@ -4,7 +4,7 @@
         <div class="control has-icons-left has-icons-right">
             <input class="input" type="url"
                 [ngClass]="brokenUrl || (!submitArticle.controls['url'].valid && submitArticle.controls['url']?.touched) ? 'is-danger': 'is-primary'"
-                placeholder="Email input" pattern="https://.*" size="30" formControlName="url">
+                placeholder="Url Address" pattern="https://.*" size="30" formControlName="url">
             <span class="icon is-small is-left">
                 <i class="fas fa-globe"></i>
             </span>
@@ -23,7 +23,7 @@
             <span class="icon is-small">
                 <i class="fas fa-hashtag"></i>
             </span>
-            Tag 
+            Limit 5 Tag 
             <mat-form-field>
                 <mat-chip-list #chipList aria-label="hashtag selection">
                   <mat-chip
@@ -43,10 +43,11 @@
                     (matChipInputTokenEnd)="add($event)">
                 </mat-chip-list>
                 <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-                  <mat-option *ngFor="let hash of filteredHashtags | async" [value]="hash">
-                    {{hash}}
-                  </mat-option>
-                </mat-autocomplete>
+                    <mat-option *ngFor="let tag of filteredHashtags | async " [value]="tag._id">
+                        {{tag.hashtag}}
+                    </mat-option>
+                    </mat-autocomplete>
+                
               </mat-form-field>
     
             
@@ -66,9 +67,19 @@
         </div>
     </div>
 
+    <div class="field" *ngIf="submitArticle.controls?.real.value === 'false'">
+        <li *ngFor="let fa of subFake">
+            <mat-checkbox 
+                          [color]="fa.color"
+                          (change)="updateFakeSelection(fa.name)">
+              {{fa.name}}
+            </mat-checkbox>
+          </li>
+    </div>
+
     <div class="field is-grouped">
         <div class="control">
-            <button class="button is-link" type="submit">Submit</button>
+            <button class="button is-link" type="submit"  [disabled]="!submitArticle.valid">Submit</button>
         </div>
     </div>
 </form>

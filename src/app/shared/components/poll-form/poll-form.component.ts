@@ -3,9 +3,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { HashtagService } from '../../services/hashtag.service';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import { map, startWith, takeUntil } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
+import { WebRequestService } from '../../services/web-request.service';
 
 @Component({
   selector: 'app-poll-form',
@@ -26,18 +27,31 @@ export class PollFormComponent implements OnInit, OnDestroy{
   removable = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
   hashtagCtrl = new FormControl();
-  filteredHashtags: Observable<string[]>;
+  filteredHashtags: Observable<any>;
   hashtags: string[] = [];
-  allHashtags: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
+
+  subFake: Array<Object> = [
+    {name: 'Misinformation', completed: false, color: 'warn'},
+    {name: 'Disinformation', completed: false, color: 'warn'},
+    {name: 'Satire', completed: false, color: 'warn'},
+    {name: 'Image/Video Manipulation', completed: false, color: 'warn'},
+    {name: 'Other', completed: false, color: 'warn'}
+  ]
 
   _unsubscribe = new Subject<any>();
 
   constructor(
-    private hashtagService: HashtagService
+    private hashtagService: HashtagService,
+    private webService: WebRequestService
   ) { 
     this.filteredHashtags = this.hashtagCtrl.valueChanges.pipe(
       startWith(''),
-      map((tag: string | null) => tag ? this._filter(tag) : this.allHashtags.slice()));
+          debounceTime(400),
+          distinctUntilChanged(),
+          switchMap(val => {
+            return this.hashtagService.getHashTags(val)
+          })      
+    );
   }
 
   ngOnInit(): void {
@@ -45,27 +59,33 @@ export class PollFormComponent implements OnInit, OnDestroy{
 
     this.submitArticle = new FormGroup({
       'url': new FormControl(null, [Validators.required, Validators.pattern(urlRegex)]),
-      'hashtag': new FormControl(null, Validators.minLength(5)),
-      'real': new FormControl(true, Validators.required)
+      'real': new FormControl(null, [Validators.required]),
+      'hashtag': new FormControl(null, []),
+      'fakeType': new FormControl([])
     });
   }
 
   onSubmit() {
     const url = this.submitArticle.value['url']
     this.brokenUrl = !this._checkUrl(url);
-
+    if (this.brokenUrl) {
+      return
+    } else {
+      this.webService.post('submit-url', {...this.submitArticle.value})
+    }
   }
 
   add(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;
+    if (this.hashtags.length > 5) {
+      return
+    }
 
-    // Add our fruit
     if ((value || '').trim()) {
       this.hashtags.push(value.trim());
     }
 
-    // Reset the input value
     if (input) {
       input.value = '';
     }
@@ -82,9 +102,20 @@ export class PollFormComponent implements OnInit, OnDestroy{
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
+    if (this.hashtags.length > 5) {
+      return
+    }
+    
     this.hashtags.push(event.option.viewValue);
     this.hashtagInput.nativeElement.value = '';
     this.hashtagCtrl.setValue(null);
+  }
+
+  updateFakeSelection(item) {
+    const prevVal = this.submitArticle.controls['fakeType'].value;
+    let temp = [...prevVal];
+    prevVal.indexOf(item) ===-1 ? temp.push(item) : temp.splice(temp.indexOf(item), 1)
+    this.submitArticle.controls['fakeType'].setValue(temp);
   }
 
   ngOnDestroy() {
@@ -92,15 +123,6 @@ export class PollFormComponent implements OnInit, OnDestroy{
     this._unsubscribe.complete();
   }
   
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    let tags;
-    this.hashtagService.getHashTags(value).pipe(takeUntil(this._unsubscribe)).subscribe(result => {
-      tags = result;
-    })
-    return tags
-    // return this.allHashtags.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
-  }
 
   private _checkUrl(url) {
     var reader = new XMLHttpRequest();
