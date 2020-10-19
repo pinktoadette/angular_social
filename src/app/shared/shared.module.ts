@@ -12,12 +12,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule} from '@angular/material/checkbox';
+import { LinkPreviewComponent } from './components/link-preview/link-preview.component';
 
 @NgModule({
   declarations: [
     NavbarComponent,
     PollFormComponent,
     NavPollComponent,
+    LinkPreviewComponent,
   ],
   imports: [
     CommonModule,
@@ -29,12 +31,13 @@ import { MatCheckboxModule} from '@angular/material/checkbox';
     MatAutocompleteModule,
     MatIconModule,
     MatCheckboxModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   exports:[
     PollFormComponent,
     NavbarComponent,
-    NavPollComponent
+    NavPollComponent,
+    LinkPreviewComponent
   ],
 })
 export class SharedModule { }

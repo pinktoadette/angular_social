@@ -5,7 +5,7 @@ import { WebRequestService } from './web-request.service';
 @Injectable({
   providedIn: 'root'
 })
-export class HashtagService {
+export class ArticleService {
 
   constructor(
     private webReqService: WebRequestService
@@ -14,4 +14,9 @@ export class HashtagService {
   getHashTags(hashtag) {
     return this.webReqService.post('hashtags',{hashtag}).pipe(tap(data => data))
   }
+
+  submitArticle(article) {
+    return this.webReqService.post('articles/submit_url',{...article}).pipe(tap(data => data))
+  }
 }
+

@@ -1,6 +1,6 @@
-import { Route } from '@angular/compiler/src/core';
-import { Component, HostListener, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Article } from 'src/app/shared/models/article.model';
 
 @Component({
   selector: 'app-feed-detail',
@@ -8,22 +8,16 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
   styleUrls: ['./feed-detail.component.scss']
 })
 export class FeedDetailComponent implements OnInit {
-  @Input() articleId: number;
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    this.innerWidth = window.innerWidth;
-  }
-  innerWidth: number;
+  @Input() articleInfo: Partial<Article>;
   constructor(
     private route: Router
   ) { }
 
   ngOnInit(): void {
-    this.innerWidth = window.innerWidth;
   }
 
   articleDetails() {
-    this.route.navigate(['/article-details', this.articleId]);
+    this.route.navigate(['/article-details', this.articleInfo['_id']]);
   }
 
 }

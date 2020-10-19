@@ -2,10 +2,16 @@
     <div class="row">
         <div class="col-md-8">
           <h1 class="h1">Trending</h1>
-          <app-feed-detail [articleId]="1"></app-feed-detail>
-          <app-feed-detail [articleId]="2"></app-feed-detail>
-          <app-feed-detail [articleId]="3"></app-feed-detail>
-          <app-feed-detail [articleId]="4"></app-feed-detail>
+          <div
+          class="search-results"
+          infiniteScroll
+          [infiniteScrollDistance]="2"
+          [infiniteScrollThrottle]="50"
+          [fromRoot]="true"
+          (scrolled)="onScroll()"
+        >
+        <app-feed-detail [articleInfo]="article" *ngFor="let article of articles"></app-feed-detail>
+        </div>
         </div>
         <div class="col-md-4">
           <app-poll-form></app-poll-form>

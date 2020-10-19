@@ -57,17 +57,22 @@
     <div class="field">
         <div class="control">
             <label class="radio">
-                <input type="radio" formControlName="real" value="false">
-                Fake News
+                <input type="radio" formControlName="real" value="fake">
+                Fake
             </label>
             <label class="radio">
-                <input type="radio" formControlName="real" value="true">
-                Real News
+                <input type="radio" formControlName="real" value="real">
+                Real
+            </label>
+            <label class="radio">
+                <input type="radio" formControlName="real" value="debatable">
+                Debatable
             </label>
         </div>
+        <small>Values may change after polling.</small>
     </div>
 
-    <div class="field" *ngIf="submitArticle.controls?.real.value === 'false'">
+    <div class="field" *ngIf="submitArticle.controls?.real.value === 'fake'">
         <li *ngFor="let fa of subFake">
             <mat-checkbox 
                           [color]="fa.color"
@@ -82,5 +87,8 @@
             <button class="button is-link" type="submit"  [disabled]="!submitArticle.valid">Submit</button>
         </div>
     </div>
+    {{ errorMessage }}
+        <br>
+        <br>    &nbsp;
 </form>
 

@@ -1,9 +1,9 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
-import { HashtagService } from '../../services/hashtag.service';
+import { ArticleService } from '../../services/article.service';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import { debounceTime, distinctUntilChanged, filter, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, map, startWith, switchMap, take, takeUntil } from 'rxjs/operators';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { WebRequestService } from '../../services/web-request.service';
@@ -29,6 +29,7 @@ export class PollFormComponent implements OnInit, OnDestroy{
   hashtagCtrl = new FormControl();
   filteredHashtags: Observable<any>;
   hashtags: string[] = [];
+  errorMessage: string;
 
   subFake: Array<Object> = [
     {name: 'Misinformation', completed: false, color: 'warn'},
@@ -41,7 +42,7 @@ export class PollFormComponent implements OnInit, OnDestroy{
   _unsubscribe = new Subject<any>();
 
   constructor(
-    private hashtagService: HashtagService,
+    private hashtagService: ArticleService,
     private webService: WebRequestService
   ) { 
     this.filteredHashtags = this.hashtagCtrl.valueChanges.pipe(
@@ -71,7 +72,11 @@ export class PollFormComponent implements OnInit, OnDestroy{
     if (this.brokenUrl) {
       return
     } else {
-      this.webService.post('submit-url', {...this.submitArticle.value})
+      this.hashtagService.submitArticle({...this.submitArticle.value, hashtags: this.hashtags}).pipe(take(1)).subscribe(result=> {
+        console.log(result)
+      }, err=>{
+        this.errorMessage = err['error']['message'];
+      })
     }
   }
 
@@ -127,9 +132,10 @@ export class PollFormComponent implements OnInit, OnDestroy{
   private _checkUrl(url) {
     var reader = new XMLHttpRequest();
     reader.open('get', url, true);
-    if (reader.onreadystatechange && reader.readyState === 4) {
-        return true
-    }
-    return false
+    // if (reader.onreadystatechange && reader.readyState === 4) {
+    //     return true
+    // }
+    // return false
+    return true
   }
 }
