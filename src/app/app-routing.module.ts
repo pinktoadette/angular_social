@@ -9,14 +9,26 @@ import { EditListComponent } from './pages/edit-list/edit-list.component';
 import { EditTaskComponent } from './pages/edit-task/edit-task.component';
 import { FeedComponent } from './feed/feed.component';
 import { ArticleDetailsComponent } from './feed/article-details/article-details.component';
+import { AccountComponent } from './account/account.component';
+import { AuthGuard } from './shared/guards/auth.guard';
+import { UserResolver } from './shared/services/user-resolver.service';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/feeds', pathMatch: 'full' },
+  { path: '', redirectTo: '/explore', pathMatch: 'full' },
   { path: 'login', component: LoginPageComponent },
   { path: 'signup', component: SignupPageComponent },
-  { path: 'feeds', component: FeedComponent},
+  { path: 'explore', component: FeedComponent},
   { path: 'article', component: ArticleDetailsComponent},
   { path: 'article/:articleId', component: ArticleDetailsComponent},
+  { path: 'account', component: AccountComponent,
+    canActivate: [AuthGuard],
+    resolve: { user: UserResolver },
+  },
+  { path: 'notifications', component: NotificationsComponent,
+    canActivate: [AuthGuard],
+    resolve: { user: UserResolver },
+  },
 
   { path: 'new-list', component: NewListComponent },
   { path: 'edit-list/:listId', component: EditListComponent },

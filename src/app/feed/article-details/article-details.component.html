@@ -1,6 +1,5 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-8">
             <button class="button is-white" (click)="backClicked()">
                 <i class="fas fa-arrow-left"></i> &nbsp; Back
             </button>
@@ -22,7 +21,7 @@
                       <small><a>Like</a> · <a>Reply</a> · 2 hrs</small>
                     </p>
                   </div>
-                  <div class="article-frame">
+                  <div class="article-frame" (click)="openLink(articleInfo['url'])">
                     <small>
                       <a href="{{articleInfo['source']}}"></a>{{articleInfo['og:site_name']}}
                   </small>
@@ -40,8 +39,6 @@
 
                   
             </div>
-
-
           <hr>
           <article class="media">
             <figure class="media-left">
@@ -126,10 +123,6 @@
               </div>
             </div>
           </article>
-        </div>
-        <div class="col-md-4">
-          <app-poll-form></app-poll-form>
-        </div>
       </div>
 </div>
 

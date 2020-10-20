@@ -15,6 +15,11 @@ import { EditListComponent } from './pages/edit-list/edit-list.component';
 import { EditTaskComponent } from './pages/edit-task/edit-task.component';
 import { FeedModule } from './feed/feed.module';
 import { SharedModule } from './shared/shared.module';
+import { AccountComponent } from './account/account.component';
+import { AuthGuard } from './shared/guards/auth.guard';
+import { UserResolver } from './shared/services/user-resolver.service';
+import { NotificationsComponent } from './notifications/notifications.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +31,9 @@ import { SharedModule } from './shared/shared.module';
     SignupPageComponent,
     EditListComponent,
     EditTaskComponent,
+    AccountComponent,
+    NotificationsComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,6 +44,8 @@ import { SharedModule } from './shared/shared.module';
   ],
   exports:[],
   providers: [
+    AuthGuard,
+    UserResolver,
     { provide: HTTP_INTERCEPTORS, useClass: WebReqInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

@@ -1,20 +1,19 @@
-    <div class="card">
-        
-        <div class="card-content">
-        <p class="title is-4">{{linkInfo['og:title']}}</p>
-      
-          <div class="content">
-            {{linkInfo['og:description']}}
-            <a href="#" *ngFor="let hashtag of  linkInfo['hashtags']">#{{hashtag}}</a>
-            <br>
-            <small>{{linkInfo['og:site_name']}}</small>
-          </div>
-        </div>
-        <app-nav-poll></app-nav-poll>
-        <div class="card-image">
-            <figure class="image is-4by2">
-              <img [src]="linkInfo['og:image']" alt="{{linkInfo['og:title']}}">
-            </figure>
-          </div>
-      </div>
-      
+<div class="card" (click)="openLink(linkInfo['url'])">
+
+  <div class="card-content">
+    <p class="title is-4">{{linkInfo['og:title']}}</p>
+
+    <div class="content">
+      {{linkInfo['og:description']}}
+      <a href="#" *ngFor="let hashtag of  linkInfo['hashtags']">#{{hashtag}}</a>
+      <br>
+      <small>{{linkInfo['og:site_name']}}</small>
+    </div>
+  </div>
+  <app-nav-poll></app-nav-poll>
+  <div class="card-image">
+    <figure class="image is-4by2">
+      <img [src]="linkInfo['og:image']" alt="{{linkInfo['og:title']}}">
+    </figure>
+  </div>
+</div>

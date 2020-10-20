@@ -20,4 +20,8 @@ export class LinkPreviewComponent implements OnInit {
     this.innerWidth = window.innerWidth;
   }
 
+  openLink(link) {
+    window.open(link, '_blank');
+  }
+
 }

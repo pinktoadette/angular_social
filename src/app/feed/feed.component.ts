@@ -12,7 +12,6 @@ import { FeedService } from './feed.service';
 })
 export class FeedComponent implements OnInit {
   articles: Partial<Article>[] = []
-  isLoggedIn: boolean = false;
   loading: boolean = false;
 
   _unsubscribe: Subject<any> = new Subject<any>();
@@ -29,7 +28,6 @@ export class FeedComponent implements OnInit {
       this.articles = !this.articles ? x : [...this.articles,...x]
       this.loading = false;
     })
-    this.isLoggedIn = this.auth.isLoggedIn() === 'true' ? true : false;
  
   }
 

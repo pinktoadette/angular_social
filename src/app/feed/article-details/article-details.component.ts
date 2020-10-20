@@ -27,6 +27,10 @@ export class ArticleDetailsComponent implements OnInit {
   });
   }
 
+  openLink(link) {
+    window.open(link, '_blank');
+  }
+
   backClicked() {
     this._location.back();
   }

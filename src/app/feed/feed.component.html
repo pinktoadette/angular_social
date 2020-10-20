@@ -1,54 +1,10 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-2">
-      <div class="position-fixed">
-        <aside class="menu">
-          <ul class="menu-list">
-            <li><a class="navbar-brand title" href="/">Vera</a></li>
+<h1 class="h1">Trending</h1>
 
-            <div class="inline" *ngIf="!isLoggedIn">
-              <button class="btn has-background-primary	" [routerLink]="['/signup']">Signup</button>&nbsp;
-              <button class="btn btn-outline-success" [routerLink]="['/login']">Login</button>
-            </div>
+<div class="fa-3x centered-content" *ngIf="loading">
+  <i class="fas fa-spinner fa-pulse"></i>
+</div>
 
-            <div class="inline" *ngIf="isLoggedIn">
-              <li><a href="/">Home</a></li>
-              <li><a href="/account">Profile</a></li>
-              <li><a>Notifications</a></li>
-              <li><a (click)="logout()">Logout</a></li>
-            </div>
-          </ul>
-        </aside>
-
-      </div>
-
-    </div>
-
-    <div class="col-md-7">
-      <div style="
-        overflow-y:hidden;">
-        <h1 class="h1">Trending</h1>
-
-        <div class="fa-3x centered-content" *ngIf="loading">
-          <i class="fas fa-spinner fa-pulse"></i>
-        </div>
-
-        <div class="search-results" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50"
-          [fromRoot]="true" (scrolled)="onScroll()">
-          <app-feed-detail [articleInfo]="article" *ngFor="let article of articles"></app-feed-detail>
-        </div>
-
-      </div>
-
-    </div>
-    <div class="col-md-3">
-      <div class="position-fixed">
-        <div class=" container is-widescreen">
-          <input class="input is-rounded" type="text" placeholder="Search">
-        </div>
-        <app-poll-form></app-poll-form>
-      </div>
-
-    </div>
-  </div>
+<div class="search-results" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" [fromRoot]="true"
+  (scrolled)="onScroll()">
+  <app-feed-detail [articleInfo]="article" *ngFor="let article of articles"></app-feed-detail>
 </div>

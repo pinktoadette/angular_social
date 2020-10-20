@@ -8,11 +8,13 @@ import { SharedModule } from '../shared/shared.module';
 import { ArticleDetailsComponent } from './article-details/article-details.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FeedService } from './feed.service';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [FeedComponent, FeedDetailComponent, ArticleDetailsComponent],
   imports: [
     CommonModule,
+    RouterModule,
     MatCardModule,
     FormsModule,
     ReactiveFormsModule,

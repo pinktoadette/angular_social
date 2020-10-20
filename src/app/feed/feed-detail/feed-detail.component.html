@@ -1,4 +1,4 @@
-<div class="media-wrapper" (click)="articleDetails()">
+<div class="media-wrapper">
   <article class="media">
     <figure class="media-left">
       <p class="image is-96x96">
@@ -8,7 +8,7 @@
 
     <div style="display: flex;
     flex-direction: column;">
-    <div class="media-content">
+    <div class="media-content"  (click)="articleDetails()">
       <div class="content">
         <p>
           <strong>Sean Brown <span class="badge">Top comment</span></strong>
