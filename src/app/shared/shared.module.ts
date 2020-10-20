@@ -14,6 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule} from '@angular/material/checkbox';
 import { LinkPreviewComponent } from './components/link-preview/link-preview.component';
 import { CommentComponent } from './components/comment/comment.component';
+import { ReplyComponent } from './components/reply/reply.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { CommentComponent } from './components/comment/comment.component';
     NavPollComponent,
     LinkPreviewComponent,
     CommentComponent,
+    ReplyComponent,
   ],
   imports: [
     CommonModule,
@@ -39,7 +41,8 @@ import { CommentComponent } from './components/comment/comment.component';
     PollFormComponent,
     NavbarComponent,
     NavPollComponent,
-    LinkPreviewComponent
+    LinkPreviewComponent,
+    ReplyComponent
   ],
 })
 export class SharedModule { }

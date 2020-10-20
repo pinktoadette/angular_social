@@ -20,6 +20,7 @@ import { AuthGuard } from './shared/guards/auth.guard';
 import { UserResolver } from './shared/services/user-resolver.service';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { ProfileComponent } from './profile/profile.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { ProfileComponent } from './profile/profile.component';
     AppRoutingModule,
     HttpClientModule,
     FeedModule,
-    SharedModule
+    SharedModule,
+    MatDialogModule
   ],
   exports:[],
   providers: [

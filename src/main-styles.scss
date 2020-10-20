@@ -5,12 +5,26 @@
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 
 $turquoise: #44ddd0;
+$softred: #dd4451; //complement
+
 $green: #27d7a1;
+$strong-pink: #d7275d; //complement
+
 $light-green: #45f69e; 
 $dark-green: rgb(0, 100, 80);
 
 $light: #f8f8f8;
 
+$black: #000;
+$gray-100: #f9f9f9;
+$gray-200: #ededed;
+$gray-300: #e0e0e0;
+$gray-400:#d3d3d3;
+$white: #fff;
+$neutral: #e3bd67;
+
+$border-radius: 20px;
+$progress-border-radius: 20px;
 
 // Update Bulma's global variables
 $family-sans-serif: "Nunito", sans-serif;
@@ -83,4 +97,33 @@ html, body {
 .media-wrapper{
     border: 1px solid #ededed;
     padding: 10px;
+}
+
+.no-padding {
+    .mat-dialog-container {
+      padding: 0px!important;
+    }
+  }
+
+  .progress-real {
+    background-color: $green;
+}
+.progress-fake {
+    background-color: $strong-pink;
+}
+.progress-neutral {
+    background-color: $neutral;
+}
+  
+.text-real {
+  color: $green;
+  font-weight: 500;
+}
+.text-fake {
+  color: $strong-pink;
+  font-weight: 500;
+}
+.text-neutral {
+  color: $neutral;
+  font-weight: 500;
 }

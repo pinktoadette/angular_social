@@ -1,1 +1,41 @@
-<p>comment works!</p>
+<div class="card">
+    <header class="card-header">
+        <article class="media">
+            <div class="media-left">
+                <figure class="image is-64x64">
+                    <img src="{{data.article['og:image']}}" alt="{{data.article['og:article:tag']}}">
+                </figure>
+            </div>
+            <div class="media-content">
+                <div class="content">
+                    <h2>{{ data.article['og:title']}}</h2>
+                    {{ data.article['og:description']}}
+                </div>
+            </div>
+        </article>
+    </header>
+    <div class="card-content">
+        <article class="media">
+            <div class="media-left">
+                <figure class="image is-64x64">
+                </figure>
+            </div>
+            <div class="media-content">
+                <textarea class="textarea" placeholder="Enter your reply"></textarea>
+            </div>
+        </article>
+
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered  text-{{ele.color}}" *ngFor="let ele of pollItems">
+                <div>
+                    <p class="heading" (click)="triggerItem(ele.type)">
+                        {{ele.text}}
+                    </p>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <footer class="card-footer">
+        <a href="#" class="card-footer-item">Reply</a>
+    </footer>
+</div>

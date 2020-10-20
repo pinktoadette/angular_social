@@ -1,52 +1,24 @@
 <p>&nbsp;</p>
-<progress class="progress is-primary is-small" title="Realness" value="50" max="100">50%</progress>
+<div class="progress">
+    <div class="progress-bar progress-real" role="progressbar" style="width:4%">
+      Real
+    </div>
+    <div class="progress-bar progress-fake" role="progressbar" style="width:1%">
+      Fake
+    </div>
+    <div class="progress-bar progress-neutral" role="progressbar" style="width:95%">
+      Unknown
+    </div>
+  </div>
 
 <nav class="level is-mobile">
-    <div class="level-item has-text-centered">
-      <div>
-        <p class="heading">
-            <!-- <span class="icon is-small">
-                <i class="fas fa-arrow-up"></i>
-            </span> -->
-            Real
-        </p>
-      </div>
-    </div>
-    <div class="level-item has-text-centered">
+    <div class="level-item has-text-centered  text-{{ele.color}}" *ngFor="let ele of pollItems">
         <div>
-            <p class="heading">
-                <!-- <span class="icon is-small">
-                    <i class="fas fa-arrow-down"></i>
-                </span> -->
-                Fake
-            </p>
-          </div>
-    </div>
-    <div class="level-item has-text-centered">
-        <div>
-            <p class="heading">
-                <!-- <span class="icon is-small">
-                    <i class="fas fa-arrow-down"></i>
-                </span> -->
-                Debatable
-            </p>
-          </div>
-    </div>
-    <!-- <div class="level-item has-text-centered">
-        <div>
-            <p class="heading">
-                <span class="icon is-small">
-                    <i class="fas fa-retweet"></i>
+            <p class="heading" (click)="triggerItem(ele.type)">
+                <span class="icon is-small" *ngIf="ele.icon">
+                    <i class="{{ele.icon}}"></i>
                 </span>
-            </p>
-          </div>
-    </div> -->
-    <div class="level-item has-text-centered">
-        <div>
-            <p class="heading">
-                <span class="icon is-small">
-                    <i class="far fa-heart" aria-hidden></i>
-                </span>
+                {{ele.text}}
             </p>
           </div>
     </div>

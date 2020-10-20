@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Location} from '@angular/common';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { CommentComponent } from 'src/app/shared/components/comment/comment.component';
 
 @Component({
   selector: 'app-article-details',
@@ -13,7 +15,8 @@ export class ArticleDetailsComponent implements OnInit {
 
   constructor(
     private _location: Location,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -27,6 +30,16 @@ export class ArticleDetailsComponent implements OnInit {
   });
   }
 
+  openDialogComment() {
+    const dialogRef = this.dialog.open(CommentComponent, {
+      width: '250px',
+      data: {article: this.articleInfo}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
   openLink(link) {
     window.open(link, '_blank');
   }

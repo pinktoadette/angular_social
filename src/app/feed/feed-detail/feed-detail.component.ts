@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CommentComponent } from 'src/app/shared/components/comment/comment.component';
 import { Article } from 'src/app/shared/models/article.model';
 
 @Component({
@@ -9,11 +11,25 @@ import { Article } from 'src/app/shared/models/article.model';
 })
 export class FeedDetailComponent implements OnInit {
   @Input() articleInfo: Partial<Article>;
+  hasComment: boolean = false;
+  
   constructor(
-    private route: Router
+    private route: Router,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
+  }
+
+  openDialogComment() {
+    const dialogRef = this.dialog.open(CommentComponent, {
+      width: '250px',
+      data: {article: this.articleInfo}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
   articleDetails() {

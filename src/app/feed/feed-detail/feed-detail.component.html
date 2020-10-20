@@ -1,23 +1,24 @@
 <div class="media-wrapper">
   <article class="media">
     <figure class="media-left">
-      <p class="image is-96x96">
+      <p class="image is-96x96" *ngIf="hasComment">
         <img src="https://bulma.io/images/placeholders/96x96.png">
       </p>
     </figure>
 
     <div style="display: flex;
     flex-direction: column;">
-    <div class="media-content"  (click)="articleDetails()">
-      <div class="content">
+    <div class="media-content" *ngIf="hasComment">
+      <div class="content response-content"  (click)="articleDetails()">
         <p>
           <strong>Sean Brown <span class="badge">Top comment</span></strong>
           <br>
           Donec sollicitudin urna eget eros malesuada sagittis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam blandit nisl a nulla sagittis, a lobortis leo feugiat.
           <br>
-          <small><a>Like</a> · <a>Reply</a> · 2 hrs</small>
         </p>
       </div>
+      <small class="response-likes"><a>Like</a> · <a (click)="openDialogComment()">Reply</a> · 2 hrs</small>
+      <br>
     </div>
     <div>
       <app-link-preview [linkInfo]="articleInfo"></app-link-preview>
