@@ -1,13 +1,14 @@
-<div class="card" (click)="openLink(linkInfo['url'])">
+<div class="card">
+  <div (click)="openLink(linkInfo['url'])">
+    <div class="card-content">
+      <p class="title is-4">{{linkInfo['og:title']}}</p>
 
-  <div class="card-content">
-    <p class="title is-4">{{linkInfo['og:title']}}</p>
-
-    <div class="content">
-      {{linkInfo['og:description']}}
-      <a href="#" *ngFor="let hashtag of  linkInfo['hashtags']">#{{hashtag}}</a>
-      <br>
-      <small>{{linkInfo['og:site_name']}}</small>
+      <div class="content">
+        {{linkInfo['og:description']}}
+        <a href="#" *ngFor="let hashtag of  linkInfo['hashtags']">#{{hashtag}}</a>
+        <br>
+        <small>{{linkInfo['og:site_name']}}</small>
+      </div>
     </div>
   </div>
   <app-nav-poll></app-nav-poll>
