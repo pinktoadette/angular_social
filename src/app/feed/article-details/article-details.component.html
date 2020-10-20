@@ -1,15 +1,47 @@
 <div class="container">
     <div class="row">
-        
         <div class="col-md-8">
             <button class="button is-white" (click)="backClicked()">
                 <i class="fas fa-arrow-left"></i> &nbsp; Back
             </button>
-          <h1 class="h1">Article Title</h1>
-          <br><small>Domain Source</small>
-          <br>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.
-          <app-nav-poll></app-nav-poll>
+
+          <div class="content">
+              <article class="media">
+                <figure class="media-left">
+                  <p class="image is-48x48">
+                    <img src="https://bulma.io/images/placeholders/96x96.png">
+                  </p>
+                </figure>
+                <div class="media-content">
+                  <div class="content">
+                    <p>
+                      <strong>Sean Brown <span class="badge">Top comment</span></strong>
+                      <br>
+                      Donec sollicitudin urna eget eros malesuada sagittis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam blandit nisl a nulla sagittis, a lobortis leo feugiat.
+                      <br>
+                      <small><a>Like</a> · <a>Reply</a> · 2 hrs</small>
+                    </p>
+                  </div>
+                  <div class="article-frame">
+                    <small>
+                      <a href="{{articleInfo['source']}}"></a>{{articleInfo['og:site_name']}}
+                  </small>
+                  <br>
+                  <strong>{{articleInfo['og:title']}}</strong> 
+                  <br>
+                  {{articleInfo['og:description']}}
+                  <div class="center-cropped">
+                      <img [src]="articleInfo['og:image']" />
+                  </div>
+              <app-nav-poll></app-nav-poll>
+                  </div>
+                </div>
+              </article>
+
+                  
+            </div>
+
+
           <hr>
           <article class="media">
             <figure class="media-left">

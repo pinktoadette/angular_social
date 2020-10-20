@@ -15,8 +15,8 @@ const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
   { path: 'signup', component: SignupPageComponent },
   { path: 'feeds', component: FeedComponent},
-  { path: 'article-details', component: ArticleDetailsComponent},
-  { path: 'article-details/:articleId', component: ArticleDetailsComponent},
+  { path: 'article', component: ArticleDetailsComponent},
+  { path: 'article/:articleId', component: ArticleDetailsComponent},
 
   { path: 'new-list', component: NewListComponent },
   { path: 'edit-list/:listId', component: EditListComponent },

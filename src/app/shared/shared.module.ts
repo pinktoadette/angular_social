@@ -13,6 +13,7 @@ import { MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule} from '@angular/material/checkbox';
 import { LinkPreviewComponent } from './components/link-preview/link-preview.component';
+import { CommentComponent } from './components/comment/comment.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { LinkPreviewComponent } from './components/link-preview/link-preview.com
     PollFormComponent,
     NavPollComponent,
     LinkPreviewComponent,
+    CommentComponent,
   ],
   imports: [
     CommonModule,

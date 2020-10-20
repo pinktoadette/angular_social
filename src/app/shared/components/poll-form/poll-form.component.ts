@@ -29,7 +29,7 @@ export class PollFormComponent implements OnInit, OnDestroy{
   hashtagCtrl = new FormControl();
   filteredHashtags: Observable<any>;
   hashtags: string[] = [];
-  errorMessage: string;
+  message: string;
 
   subFake: Array<Object> = [
     {name: 'Misinformation', completed: false, color: 'warn'},
@@ -74,8 +74,11 @@ export class PollFormComponent implements OnInit, OnDestroy{
     } else {
       this.hashtagService.submitArticle({...this.submitArticle.value, hashtags: this.hashtags}).pipe(take(1)).subscribe(result=> {
         console.log(result)
+        this.submitArticle.reset();
+        this.message = "Submitted"
+
       }, err=>{
-        this.errorMessage = err['error']['message'];
+        this.message = err['error']['message'];
       })
     }
   }

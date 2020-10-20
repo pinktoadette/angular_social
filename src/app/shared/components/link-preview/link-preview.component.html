@@ -1,42 +1,20 @@
-<ng-container *ngIf="innerWidth > 767; else mobile">
-    <article class="media">
-        <!-- <div class="center-cropped"
-        [ngStyle]="{'background-image': 'url(' + linkInfo['og:image'] + ')'}"
-        > -->
-        <div class="center-cropped">
-            <img [src]="linkInfo['og:image']" />
-            <small class="is-pulled-right">
-                <a href="{{linkInfo['source']}}"></a>{{linkInfo['og:site_name']}}
-            </small>
+    <div class="card">
+        
+        <div class="card-content">
+        <p class="title is-4">{{linkInfo['og:title']}}</p>
+      
+          <div class="content">
+            {{linkInfo['og:description']}}
+            <a href="#" *ngFor="let hashtag of  linkInfo['hashtags']">#{{hashtag}}</a>
+            <br>
+            <small>{{linkInfo['og:site_name']}}</small>
+          </div>
         </div>
-        <figure class="image is-4by3">
-            <img src="https://bulma.io/images/placeholders/640x480.png">
-        </figure>
-        <div class="media-content">
-            <div class="content">
-                <p>
-                    <strong>{{linkInfo['og:title']}}</strong>
-                    <br>
-                    {{linkInfo['og:description']}}
-                </p>
-            </div>
-            <app-nav-poll></app-nav-poll>
-        </div>
-    </article>
-
-</ng-container>
-<ng-template #mobile>
-    <div class="content">
-        <small>
-            <a href="{{linkInfo['source']}}"></a>{{linkInfo['og:site_name']}}
-        </small>
-        <br>
-        <strong>{{linkInfo['og:title']}}</strong> 
-        <br>
-        {{linkInfo['og:description']}}
-        <div class="center-cropped">
-            <img [src]="linkInfo['og:image']" />
-        </div>
-    <app-nav-poll></app-nav-poll>
-  </div>
-</ng-template>
+        <app-nav-poll></app-nav-poll>
+        <div class="card-image">
+            <figure class="image is-4by2">
+              <img [src]="linkInfo['og:image']" alt="{{linkInfo['og:title']}}">
+            </figure>
+          </div>
+      </div>
+      

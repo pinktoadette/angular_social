@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Location} from '@angular/common';
+import { Location} from '@angular/common';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-article-details',
@@ -8,11 +9,22 @@ import {Location} from '@angular/common';
 })
 export class ArticleDetailsComponent implements OnInit {
 
+  articleInfo: Object;
+
   constructor(
-    private _location: Location
+    private _location: Location,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
+    this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
+      if (!!window.history.state['articleId']) {
+        this.articleInfo = window.history.state['articleInfo']
+      } else {
+        // search by title
+        console.log(params)
+      }
+  });
   }
 
   backClicked() {

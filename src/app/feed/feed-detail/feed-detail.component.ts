@@ -17,7 +17,9 @@ export class FeedDetailComponent implements OnInit {
   }
 
   articleDetails() {
-    this.route.navigate(['/article-details', this.articleInfo['_id']]);
+    const title = this.articleInfo['og:title'].trim().replace(/\s/g , "-");
+    this.route.navigateByUrl(`/article/${title}`, { state: { articleId: this.articleInfo['_id'], articleInfo: this.articleInfo } });
+
   }
 
 }

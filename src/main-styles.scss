@@ -33,7 +33,6 @@ html {
 }
 
 html, body {
-    height: 100%;
     font-family: 'Roboto';
 }
 
@@ -69,4 +68,19 @@ html, body {
     width: 350px;
     max-width: 350px;
     
+}
+
+.article-frame{
+    border-radius: 10px;
+    border: 1px solid #dfdfdf;
+    padding: 20px;
+
+    img{
+        border-radius: 10px
+    }
+}
+
+.media-wrapper{
+    border: 1px solid #ededed;
+    padding: 10px;
 }

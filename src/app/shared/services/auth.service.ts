@@ -39,8 +39,7 @@ export class AuthService {
 
   logout() {
     this.removeSession();
-
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
 
   getAccessToken() {
@@ -58,21 +57,27 @@ export class AuthService {
   setAccessToken(accessToken: string) {
     localStorage.setItem('X-Access-Token', accessToken)
   }
+
+  isLoggedIn() {
+    return localStorage.getItem('isLogin');
+  }
   
   private setSession(userId: string, accessToken: string, refreshToken: string) {
     localStorage.setItem('user-id', userId);
     localStorage.setItem('X-Access-Token', accessToken);
     localStorage.setItem('x-refresh-token', refreshToken);
+    localStorage.setItem('isLogin', 'true');
   }
 
   private removeSession() {
     localStorage.removeItem('user-id');
     localStorage.removeItem('X-Access-Token');
     localStorage.removeItem('x-refresh-token');
+    localStorage.removeItem('isLogin');
   }
 
   getNewAccessToken() {
-    return this.http.get(`${this.webService.ROOT_URL}/users/me/access-token`, {
+    return this.http.get(`${this.webService.ROOT_URL}/user/access-token`, {
       headers: {
         'x-refresh-token': this.getRefreshToken(),
         '_id': this.getUserId()
