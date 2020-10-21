@@ -18,5 +18,11 @@ export class ArticleService {
   submitArticle(article) {
     return this.webReqService.post('articles/submit_url',{...article}).pipe(tap(data => data))
   }
+
+  submitComment(comment) {
+    debugger
+    return this.webReqService.post('comment/article',{...comment}).pipe(tap(data => data))
+
+  }
 }
 

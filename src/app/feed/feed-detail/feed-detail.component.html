@@ -13,11 +13,14 @@
         <p>
           <strong>Sean Brown <span class="badge">Top comment</span></strong>
           <br>
-          Donec sollicitudin urna eget eros malesuada sagittis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam blandit nisl a nulla sagittis, a lobortis leo feugiat.
+         {{articleInfo['commentsObjects'][0]?.reply }}
           <br>
         </p>
       </div>
-      <small class="response-likes"><a>Like</a> · <a (click)="openDialogComment()">Reply</a> · 2 hrs</small>
+      <small class="response-likes"><a>Like</a> · 
+        <a (click)="openDialogComment()">Reply</a> 
+          {{articleInfo['commentsObjects'][0]?.submittedDate | date: 'MM-dd-yyyy' }}
+      </small>
       <br>
     </div>
     <div>

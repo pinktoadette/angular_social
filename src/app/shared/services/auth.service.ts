@@ -27,8 +27,8 @@ export class AuthService {
   }
 
 
-  signup(email: string, password: string) {
-    return this.webService.signup(email, password).pipe(
+  signup(email: string, password: string, handle) {
+    return this.webService.signup(email, password, handle).pipe(
       shareReplay(),
       tap((res: HttpResponse<any>) => {
         // the auth tokens will be in the header of this response

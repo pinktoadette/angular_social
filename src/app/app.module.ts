@@ -19,8 +19,9 @@ import { AccountComponent } from './account/account.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { UserResolver } from './shared/services/user-resolver.service';
 import { NotificationsComponent } from './notifications/notifications.component';
-import { ProfileComponent } from './profile/profile.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProfileModule } from './profile/profile.module';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,6 @@ import { MatDialogModule } from '@angular/material/dialog';
     EditTaskComponent,
     AccountComponent,
     NotificationsComponent,
-    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,7 +42,10 @@ import { MatDialogModule } from '@angular/material/dialog';
     HttpClientModule,
     FeedModule,
     SharedModule,
-    MatDialogModule
+    ProfileModule,
+    MatDialogModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports:[],
   providers: [

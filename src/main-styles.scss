@@ -105,14 +105,17 @@ html, body {
     }
   }
 
-  .progress-real {
+.progress-real {
     background-color: $green;
+    color: $white;
 }
 .progress-fake {
     background-color: $strong-pink;
+    color: $white;
 }
 .progress-neutral {
     background-color: $neutral;
+    color: $white;
 }
   
 .text-real {

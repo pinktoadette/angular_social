@@ -39,7 +39,7 @@ export class PollFormComponent implements OnInit, OnDestroy{
     {name: 'Other', completed: false, color: 'warn'}
   ]
 
-  _unsubscribe = new Subject<any>();
+  private _unsubscribe = new Subject<any>();
 
   constructor(
     private hashtagService: ArticleService,

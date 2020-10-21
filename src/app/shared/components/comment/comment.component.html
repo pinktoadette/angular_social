@@ -21,21 +21,34 @@
                 </figure>
             </div>
             <div class="media-content">
-                <textarea class="textarea" placeholder="Enter your reply"></textarea>
+                <textarea class="textarea" 
+                [(ngModel)]="reply"
+                placeholder="Enter your reply"></textarea>
             </div>
         </article>
 
         <nav class="level is-mobile">
-            <div class="level-item has-text-centered  text-{{ele.color}}" *ngFor="let ele of pollItems">
-                <div>
-                    <p class="heading" (click)="triggerItem(ele.type)">
-                        {{ele.text}}
-                    </p>
+            <ng-container *ngFor="let ele of pollItems">
+                <div class="level-item has-text-centered"
+                    [ngClass]="real === ele.type ? 'progress-'+ele.color : 'text-'+ele.color ">
+                    <div>
+                        <p class="heading" (click)="triggerItem(ele.type)">
+                            {{ele.text}}
+                        </p>
+                    </div>
                 </div>
-            </div>
+            </ng-container>
         </nav>
     </div>
     <footer class="card-footer">
-        <a href="#" class="card-footer-item">Reply</a>
+        
+        <a class="card-footer-item" (click)="submit()">
+            <div class="fa-md centered-content" >
+                <i class="fas fa-spinner fa-pulse" *ngIf="loading"></i> Reply<br>
+              </div>
+            </a>
+            <br>
+            {{ message }}
+
     </footer>
 </div>

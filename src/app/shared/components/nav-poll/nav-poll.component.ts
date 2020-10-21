@@ -48,6 +48,7 @@ export class NavPollComponent implements OnInit {
 
   openDialogComment() {
     const dialogRef = this.dialog.open(CommentComponent, {
+      width: '500px',
       panelClass: 'no-padding',
       data: { article: this.articleInfo }
     });

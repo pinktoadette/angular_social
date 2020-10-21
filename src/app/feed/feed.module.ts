@@ -24,6 +24,9 @@ import { RouterModule } from '@angular/router';
   ],
   providers:[
     FeedService
+  ],
+  exports: [
+    FeedDetailComponent
   ]
 })
 export class FeedModule { }

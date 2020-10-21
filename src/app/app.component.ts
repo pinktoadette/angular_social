@@ -17,4 +17,8 @@ export class AppComponent implements OnInit{
       this.isLoggedIn = val;
     });
   }
+
+  logout() {
+    this.auth.logout()
+  }
 }

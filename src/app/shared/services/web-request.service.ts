@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHandler, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -13,7 +13,17 @@ export class WebRequestService {
     this.ROOT_URL = environment.API_URL;
   }
 
-  get(uri: string) {
+  get(uri: string, search_params = null) {
+    if (search_params) {
+      let params = new HttpParams();
+      for (let key of Object.keys(search_params)) {
+        params = params.append(key, search_params[key]);
+      }
+      let options = {
+        params
+     }
+      return this.http.get(`${this.ROOT_URL}/${uri}`, options);  
+    }
     return this.http.get(`${this.ROOT_URL}/${uri}`);
   }
 
@@ -38,10 +48,11 @@ export class WebRequestService {
       });
   }
 
-  signup(email: string, password: string) {
+  signup(email: string, password: string, handle: string) {
     const body= {
       email,
-      password
+      password,
+      handle
     };
 
     return this.http.post(`${this.ROOT_URL}/register`, body, {

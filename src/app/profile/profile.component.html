@@ -1,1 +1,45 @@
-<p>profile works!</p>
+<br>&nbsp;
+<div class="container" style="height: 100%">
+    <figure>
+        <img src="https://bulma.io/images/placeholders/128x128.png">
+    </figure>
+    <br>@{{handle }}
+    <nav class="level is-mobile">
+        <div class="level-item has-text-centered">
+          <div>
+            <p class="heading">Article</p>
+            <p class="title">3,456</p>
+          </div>
+        </div>
+        <div class="level-item has-text-centered">
+          <div>
+            <p class="heading">Following</p>
+            <p class="title">123</p>
+          </div>
+        </div>
+        <div class="level-item has-text-centered">
+          <div>
+            <p class="heading">Followers</p>
+            <p class="title">456K</p>
+          </div>
+        </div>
+        <div class="level-item has-text-centered">
+          <div>
+            <p class="heading">Comments</p>
+            <p class="title">789</p>
+          </div>
+        </div>
+      </nav>
+
+    <div class="fa-3x centered-content" *ngIf="loading">
+        <i class="fas fa-spinner fa-pulse"></i>
+    </div>
+
+    <div class="columns" *ngIf="!loading">
+
+        <div class="column is-half" *ngFor="let item of profile[0]?.article; let index = index">
+            <app-link-preview [linkInfo]="item"></app-link-preview>
+            <div class="is-clearfix" *ngIf="index % 2 == 0"></div>
+        </div>
+    </div>
+</div>

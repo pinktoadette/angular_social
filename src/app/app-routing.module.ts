@@ -13,6 +13,7 @@ import { AccountComponent } from './account/account.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { UserResolver } from './shared/services/user-resolver.service';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/explore', pathMatch: 'full' },
@@ -29,6 +30,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     resolve: { user: UserResolver },
   },
+  { path: 'p/:handle', component: ProfileComponent },
 
   { path: 'new-list', component: NewListComponent },
   { path: 'edit-list/:listId', component: EditListComponent },
