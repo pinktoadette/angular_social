@@ -1,0 +1,7 @@
+{
+    "/v1/api": {
+      "target": "https://buzzlerapi.herokuapp.com/",
+      "secure": true,
+      "changeOrigin": true
+    }
+  }
