@@ -2,13 +2,13 @@
   "name": "frontend",
   "version": "0.0.0",
   "scripts": {
-    "start": "ng serve",
+    "ng": "ng",
+    "start": "node server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "preinstall": "npm i @angular-devkit/build-angular && npm i -g @angular/cli",
-    "heroku-postbuild": "ng build --prod"
+    "preinstall": "npm i @angular-devkit/build-angular && npm i -g @angular/cli"
   },
   "private": true,
   "dependencies": {
