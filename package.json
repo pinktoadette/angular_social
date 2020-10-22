@@ -3,12 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "start": "node server.js",
-    "build": "ng build",
+    "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "preinstall": "npm i -g http-server && npm i -g @angular/cli",
-    "heroku-postbuild": "ng build --prod"
   },
   "private": true,
   "dependencies": {
