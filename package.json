@@ -7,14 +7,15 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "preinstall": "npm i -g http-server && npm i -g @angular/cli && npm i @angular-devkit/build-angular",
+    "preinstall": "npm i",
     "heroku-postbuild": "ng build --prod"
   },
   "private": true,
   "dependencies": {
+    "@angular-devkit/build-angular": "~0.1001.7",
+    "@angular/cli": "~10.1.7",
     "@angular/animations": "~10.1.6",
     "@angular/cdk": "^10.2.5",
-    "@angular/cli": "^10.1.7",
     "@angular/compiler-cli": "~10.1.6",
     "@angular/common": "~10.1.6",
     "@angular/compiler": "~10.1.6",
@@ -24,7 +25,6 @@
     "@angular/platform-browser": "~10.1.6",
     "@angular/platform-browser-dynamic": "~10.1.6",
     "@angular/router": "~10.1.6",
-    "@angular-devkit/build-angular": "~0.1001.7",
     "bulma": "^0.9.1",
     "core-js": "^3.6.5",
     "ngx-infinite-scroll": "^9.1.0",
@@ -34,8 +34,6 @@
     "zone.js": "~0.11.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.1001.7",
-    "@angular/cli": "~10.1.7",
     "@angular/compiler-cli": "~10.1.6",
     "@angular/language-service": "~10.1.6",
     "@types/jasmine": "~3.5.14",
