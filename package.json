@@ -6,9 +6,7 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "preinstall": "npm i -g http-server && npm i -g @angular/cli",
-    "heroku-postbuild": "ng build --configuration=production"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
