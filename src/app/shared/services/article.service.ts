@@ -20,9 +20,11 @@ export class ArticleService {
   }
 
   submitComment(comment) {
-    debugger
     return this.webReqService.post('comment/article',{...comment}).pipe(tap(data => data))
+  }
 
+  getArticleMetaTags(id){
+    return this.webReqService.get('articles/single', {id})
   }
 }
 

@@ -1,20 +1,27 @@
 <div class="card">
-  <div (click)="openLink(linkInfo['url'])">
-    <div class="card-content">
-      <p class="title is-4">{{linkInfo['og:title']}}</p>
+  <div class="fa-3x centered-content is-full" *ngIf="loading">
+    <i class="fas fa-spinner fa-xs	"></i>
+  </div>
 
-      <div class="content">
-        {{linkInfo['og:description']}}
-        <a href="#" *ngFor="let hashtag of  linkInfo['hashtags']">#{{hashtag}}</a>
-        <br>
-        <small>{{linkInfo['og:site_name']}}</small>
+  <ng-container *ngIf="!loading && metaTags">
+    <div (click)="openLink(metaTags['url'])">
+      <div class="card-content">
+        <p class="title is-4">{{metaTags['og:title']}}</p>
+  
+        <div class="content">
+          {{metaTags['og:description']}}
+          <a href="#" *ngFor="let hashtag of  linkInfo['hashtags']">#{{hashtag}}</a>
+          <br>
+          <small>{{metaTags['og:site_name']}}</small>
+        </div>
       </div>
     </div>
-  </div>
-  <app-nav-poll [articleInfo]="linkInfo"></app-nav-poll>
-  <div class="card-image">
-    <figure class="image is-4by2">
-      <img [src]="linkInfo['og:image']" alt="{{linkInfo['og:title']}}">
-    </figure>
-  </div>
+    <app-nav-poll [articleInfo]="linkInfo"></app-nav-poll>
+    <div class="card-image">
+      <figure class="image is-4by2">
+        <img [src]="metaTags['og:image']" alt="{{metaTags['og:title']}}">
+      </figure>
+    </div>
+  </ng-container>
+  
 </div>
