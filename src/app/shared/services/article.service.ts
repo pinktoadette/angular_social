@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { WebRequestService } from './web-request.service';
 
@@ -35,7 +36,7 @@ export class ArticleService {
     return this.webReqService.post('articles/my_vote', {articleId, real}).pipe(tap(data => data))
   }
 
-  getVoteArticlePoll(articleId) {
+  getVoteArticlePoll(articleId): Observable<any> {
     return this.webReqService.get('articles/my_vote', {articleId})
   }
 

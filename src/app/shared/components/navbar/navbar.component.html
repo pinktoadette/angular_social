@@ -1,7 +1,35 @@
-<nav class="navbar">
-  <!-- <div>
-    <a class="navbar-brand title" [routerLink]="['/']">Vera
+<nav class="navbar position-fixed" style="width: 100%" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand" style="width: 100%">
+    <a class="navbar-item" href="/">
+  <h1 class="title">Truthy</h1>
+</a>
+
+    <a role="button" class="navbar-burger burger navbar-end" aria-label="menu" aria-expanded="false"
+      data-target="navbarBasicExample" (click)="showBurgerMenu = !showBurgerMenu">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
     </a>
   </div>
-     -->
-  </nav>
+
+  <mat-sidenav-container *ngIf="showBurgerMenu">
+    <mat-sidenav-content>
+      <ul style="text-align: right; width: 100%">
+        <div class="inline" *ngIf="!isLoggedIn">
+          <li><a class="cursor-finger" href="/">Home</a></li>
+          <li><a class="cursor-finger" [routerLink]="['/signup']">Signup</a></li>
+          <li><a [routerLink]="['/login']">Login</a></li>
+        </div>
+
+        <div class="inline" *ngIf="isLoggedIn">
+          <li><a href="/">Home</a></li>
+          <li *ngIf="handle"><a [routerLink]="['/p', handle]">Profile</a></li>
+          <li><a [routerLink]="['/notifications']">Notifications</a></li>
+          <li><a (click)="logout()">Logout</a></li>
+        </div>
+      </ul>
+    </mat-sidenav-content>
+
+  </mat-sidenav-container>
+
+</nav>

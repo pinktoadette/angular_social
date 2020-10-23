@@ -5,15 +5,15 @@
   </figure>
   <br>@{{ profileHandle }}
   <br>
-  <button class="button is-primary is-pulled-right" *ngIf="userHandle !== profileHandle">Follow</button>
-  <button class="button is-primary is-pulled-right is-outlined" *ngIf="userHandle === profileHandle"
+  <button class="button is-primary is-pulled-right cursor-finger" *ngIf="userHandle !== profileHandle">Follow</button>
+  <button class="button is-primary is-pulled-right is-outlined cursor-finger" *ngIf="userHandle === profileHandle"
     [routerLink]="['/account']">Edit Profile</button>
   <br>
 
   <nav class="level is-mobile">
 
     <div class="level-item has-text-centered" *ngFor="let stat of stats | keyvalue">
-      <div (click)="viewChild(stat.key)">
+      <div (click)="viewChild(stat.key)" class="cursor-finger">
         <p class="heading">{{stat.key | titlecase}}</p>
         <p class="title">{{stat.value}}</p>
       </div>

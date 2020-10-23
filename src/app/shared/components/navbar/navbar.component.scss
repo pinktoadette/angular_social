@@ -1,12 +1,15 @@
-.navbar{
+.navbar, .mat-drawer-container.mat-sidenav-container{
     background-color: #000;
     color:#fff;
 }
-
+.mat-drawer-container.mat-sidenav-container {
+    width: 100%
+}
 .navbar a {
     color: #fff;
 }
 
 .title {
     margin-bottom: unset;
+    color: #fff;
 }

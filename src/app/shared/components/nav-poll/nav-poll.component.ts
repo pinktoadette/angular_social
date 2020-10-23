@@ -13,6 +13,7 @@ import { sum, values} from 'lodash';
 })
 export class NavPollComponent implements OnInit {
   @Input() articleInfo;
+  @Input() metaTags;
   pollItems: Object[] = [
     { icon: 'far fa-comment', text: '', color: '', type: 'comment' },
     { icon: 'fas fa-retweet', text: '', color: '', type: 'retweet' },
@@ -60,9 +61,7 @@ export class NavPollComponent implements OnInit {
   getAllVoteCount() {
     this.articleService.allVoteTally(this.articleInfo._id).subscribe(result =>{
       this.allVoteCount = result
-      console.log(result)
       this.sumAll = sum(values(result));
-      console.log(this.sumAll)
     })
   }
 
@@ -70,7 +69,7 @@ export class NavPollComponent implements OnInit {
     const dialogRef = this.dialog.open(CommentComponent, {
       width: '500px',
       panelClass: 'no-padding',
-      data: { article: this.articleInfo }
+      data: { article: this.metaTags }
     });
 
     dialogRef.afterClosed().subscribe(result => {

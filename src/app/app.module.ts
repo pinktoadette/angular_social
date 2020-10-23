@@ -5,6 +5,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TaskViewComponent } from './pages/task-view/task-view.component';
 
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule} from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NewListComponent } from './pages/new-list/new-list.component';
 import { NewTaskComponent } from './pages/new-task/new-task.component';
@@ -19,9 +23,10 @@ import { AccountComponent } from './account/account.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { UserResolver } from './shared/services/user-resolver.service';
 import { NotificationsComponent } from './notifications/notifications.component';
-import { MatDialogModule } from '@angular/material/dialog';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileModule } from './profile/profile.module';
+
 
 @NgModule({
   declarations: [
@@ -44,6 +49,8 @@ import { ProfileModule } from './profile/profile.module';
     SharedModule,
     ProfileModule,
     MatDialogModule,
+    MatIconModule,
+    MatButtonModule,
     FormsModule,
     ReactiveFormsModule
   ],

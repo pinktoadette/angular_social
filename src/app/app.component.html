@@ -1,27 +1,35 @@
 <!-- <app-navbar></app-navbar> -->
+<div *ngIf="innerWidth <= 767">
+    <app-navbar></app-navbar>
+    <div style="padding-bottom: 100px"></div>
+</div>
 <div class="container">
     <div class="row">
         <div class="col-md-2">
-            <div class="position-fixed">
-                <aside class="menu">
-                    <ul class="menu-list">
-                        <li><a class="navbar-brand title" href="/">Buzzler</a></li>
-
-                        <div class="inline" *ngIf="!isLoggedIn">
-                            <li><a href="/">Home</a></li>
-                            <li><a [routerLink]="['/signup']">Signup</a></li>
-                            <li><a [routerLink]="['/login']">Login</a></li>
-                        </div>
-
-                        <div class="inline" *ngIf="isLoggedIn">
-                            <li><a href="/">Home</a></li>
-                            <li *ngIf="handle"><a [routerLink]="['/p', handle]">Profile</a></li>
-                            <li><a [routerLink]="['/notifications']">Notifications</a></li>
-                            <li><a (click)="logout()">Logout</a></li>
-                        </div>
-                    </ul>
-                </aside>
-            </div>
+            <ng-container *ngIf="innerWidth > 767">
+                <div class="position-fixed">
+                    <aside class="menu">
+                        <ul class="menu-list">
+                            <li><a class="navbar-brand title cursor-finger" href="/">
+                                <h1 class="title">Truthy</h1></a></li>
+    
+                            <div class="inline" *ngIf="!isLoggedIn">
+                                <li><a class="cursor-finger" href="/">Home</a></li>
+                                <li><a class="cursor-finger" [routerLink]="['/signup']">Signup</a></li>
+                                <li><a [routerLink]="['/login']">Login</a></li>
+                            </div>
+    
+                            <div class="inline" *ngIf="isLoggedIn">
+                                <li><a href="/">Home</a></li>
+                                <li *ngIf="handle"><a [routerLink]="['/p', handle]">Profile</a></li>
+                                <li><a [routerLink]="['/notifications']">Notifications</a></li>
+                                <li><a (click)="logout()">Logout</a></li>
+                            </div>
+                        </ul>
+                    </aside>
+                </div>
+            </ng-container>
+            
         </div>
         <div class="col-md-7">
             <div style="
@@ -30,14 +38,25 @@
             </div>
         </div>
     
-        <div class="col-md-3">
-            <div class="position-fixed">
-                <div class=" container is-widescreen">
-                    <input class="input is-rounded" type="text" placeholder="Search">
+        <ng-container *ngIf="innerWidth>767; else small">
+            <div class="col-md-3" >
+                <div class="position-fixed" >
+                    <div class=" container is-widescreen">
+                        <input class="input is-rounded" type="text" placeholder="Search">
+                    </div>
+                    <app-poll-form></app-poll-form>
                 </div>
-                <app-poll-form></app-poll-form>
             </div>
-    
-        </div>
+        </ng-container>
+        
+        <ng-template #small>
+            <div class="fab-you">
+                <button mat-mini-fab color="accent" aria-label="Add News">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </div>
+            
+        </ng-template>
+        
     </div>
 </div>

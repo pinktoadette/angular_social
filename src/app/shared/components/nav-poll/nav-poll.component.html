@@ -1,6 +1,6 @@
 <p>&nbsp;</p>
 <div class="progress">
-    <div class="progress-bar progress-{{vote.key}}" role="progressbar" [ngStyle]="{'width': vote.value/sumAll*100+'%' }" *ngFor="let vote of allVoteCount | keyvalue ">
+    <div class="cursor-finger progress-bar progress-{{vote.key}}" role="progressbar" [ngStyle]="{'width': vote.value/sumAll*100+'%' }" *ngFor="let vote of allVoteCount | keyvalue ">
       {{vote.key | titlecase }}
     </div>
   </div>
@@ -10,7 +10,7 @@
     [ngClass]="voteType === ele.type ? 'progress-'+ele.color : 'text-'+ele.color "
     *ngFor="let ele of pollItems">
         <div>
-            <p class="heading" (click)="triggerItem(ele.type)">
+            <p class="heading cursor-finger" (click)="triggerItem(ele.type)" >
                 <span class="icon is-small" *ngIf="ele.icon">
                     <i class="{{ele.icon}}"></i>
                 </span>

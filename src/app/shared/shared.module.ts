@@ -11,6 +11,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+
 import { MatCheckboxModule} from '@angular/material/checkbox';
 import { LinkPreviewComponent } from './components/link-preview/link-preview.component';
 import { CommentComponent } from './components/comment/comment.component';
@@ -37,6 +39,7 @@ import { LoadingComponent } from './components/loading/loading.component';
     MatAutocompleteModule,
     MatIconModule,
     MatCheckboxModule,
+    MatSidenavModule,
     BrowserAnimationsModule,
   ],
   exports:[

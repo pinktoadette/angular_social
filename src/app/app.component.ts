@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { AuthService } from './shared/services/auth.service';
 
 @Component({
@@ -7,6 +7,11 @@ import { AuthService } from './shared/services/auth.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit{
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerWidth = window.innerWidth;
+  }
+  innerWidth: number;
   title = 'Crowdsource Real News';
   isLoggedIn: boolean = false;
   handle: string;
@@ -14,6 +19,7 @@ export class AppComponent implements OnInit{
   constructor(private auth: AuthService) {}
   
   ngOnInit() {
+    this.innerWidth = window.innerWidth;
     this.auth.loggedIn.subscribe(val => {
       this.isLoggedIn = val;
     });
