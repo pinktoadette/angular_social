@@ -1,9 +1,8 @@
-<div class="card">
-  <div class="fa-3x centered-content is-full" *ngIf="loading">
-    <i class="fas fa-spinner fa-xs	"></i>
-  </div>
+<div class="is-full" >
+  <app-loading [size]="fa-md" *ngIf="loading  "></app-loading>
+</div>
 
-  <ng-container *ngIf="!loading && metaTags">
+<div class="card" *ngIf="!loading && metaTags">
     <div (click)="openLink(metaTags['url'])">
       <div class="card-content">
         <p class="title is-4">{{metaTags['og:title']}}</p>
@@ -22,6 +21,4 @@
         <img [src]="metaTags['og:image']" alt="{{metaTags['og:title']}}">
       </figure>
     </div>
-  </ng-container>
-  
 </div>

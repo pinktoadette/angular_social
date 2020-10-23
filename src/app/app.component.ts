@@ -9,6 +9,7 @@ import { AuthService } from './shared/services/auth.service';
 export class AppComponent implements OnInit{
   title = 'Crowdsource Real News';
   isLoggedIn: boolean = false;
+  handle: string;
 
   constructor(private auth: AuthService) {}
   
@@ -16,6 +17,7 @@ export class AppComponent implements OnInit{
     this.auth.loggedIn.subscribe(val => {
       this.isLoggedIn = val;
     });
+    this.handle = this.auth.getUserHandle();
   }
 
   logout() {

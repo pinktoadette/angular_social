@@ -1,8 +1,7 @@
 <h1 class="h1">Trending</h1>
 
-<div class="fa-3x centered-content" *ngIf="loading">
-  <i class="fas fa-spinner fa-pulse"></i>
-</div>
+<app-loading *ngIf="loading" [size]="'fa-3x'" [style]="'fas fa-spinner fa-pulse'" >
+</app-loading>
 
 <div class="search-results" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" [fromRoot]="true"
   (scrolled)="onScroll()">

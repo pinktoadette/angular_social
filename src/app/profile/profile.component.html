@@ -1,45 +1,42 @@
 <br>&nbsp;
 <div class="container" style="height: 100%">
-    <figure>
-        <img src="https://bulma.io/images/placeholders/128x128.png">
-    </figure>
-    <br>@{{handle }}
-    <nav class="level is-mobile">
-        <div class="level-item has-text-centered">
-          <div>
-            <p class="heading">Article</p>
-            <p class="title">3,456</p>
-          </div>
-        </div>
-        <div class="level-item has-text-centered">
-          <div>
-            <p class="heading">Following</p>
-            <p class="title">123</p>
-          </div>
-        </div>
-        <div class="level-item has-text-centered">
-          <div>
-            <p class="heading">Followers</p>
-            <p class="title">456K</p>
-          </div>
-        </div>
-        <div class="level-item has-text-centered">
-          <div>
-            <p class="heading">Comments</p>
-            <p class="title">789</p>
-          </div>
-        </div>
-      </nav>
+  <figure>
+    <img src="https://bulma.io/images/placeholders/128x128.png">
+  </figure>
+  <br>@{{ profileHandle }}
+  <br>
+  <button class="button is-primary is-pulled-right" *ngIf="userHandle !== profileHandle">Follow</button>
+  <button class="button is-primary is-pulled-right is-outlined" *ngIf="userHandle === profileHandle"
+    [routerLink]="['/account']">Edit Profile</button>
+  <br>
 
-    <div class="fa-3x centered-content" *ngIf="loading">
-        <i class="fas fa-spinner fa-pulse"></i>
+  <nav class="level is-mobile">
+
+    <div class="level-item has-text-centered" *ngFor="let stat of stats | keyvalue">
+      <div (click)="viewChild(stat.key)">
+        <p class="heading">{{stat.key | titlecase}}</p>
+        <p class="title">{{stat.value}}</p>
+      </div>
     </div>
+  </nav>
 
-    <div class="columns" *ngIf="!loading">
+  <div class="fa-3x centered-content" *ngIf="loading">
+    <i class="fas fa-spinner fa-pulse"></i>
+  </div>
 
-        <div class="column is-half" *ngFor="let item of profile[0]?.article; let index = index">
-            <app-link-preview [linkInfo]="item"></app-link-preview>
-            <div class="is-clearfix" *ngIf="index % 2 == 0"></div>
-        </div>
+  <div class="columns" *ngIf="!loading && viewThis === 'posted'">
+    <div class="column is-half" *ngFor="let item of profile?.article; let index = index">
+      <app-link-preview [linkInfo]="item"></app-link-preview>
+      <div class="is-clearfix" *ngIf="index % 2 == 0"></div>
     </div>
+  </div>
+  <div class="columns" *ngIf="!loading && viewThis === 'following'">
+    {{viewThis}}
+  </div>
+  <div class="columns" *ngIf="!loading && viewThis === 'followers'">
+    {{viewThis}}
+  </div>
+  <div class="columns" *ngIf="!loading && viewThis === 'comments'">
+    {{viewThis}}
+  </div>
 </div>

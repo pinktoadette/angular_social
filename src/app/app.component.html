@@ -15,7 +15,7 @@
 
                         <div class="inline" *ngIf="isLoggedIn">
                             <li><a href="/">Home</a></li>
-                            <li><a [routerLink]="['/account']">Profile</a></li>
+                            <li *ngIf="handle"><a [routerLink]="['/p', handle]">Profile</a></li>
                             <li><a [routerLink]="['/notifications']">Notifications</a></li>
                             <li><a (click)="logout()">Logout</a></li>
                         </div>

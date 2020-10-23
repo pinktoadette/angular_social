@@ -15,6 +15,7 @@ import { MatCheckboxModule} from '@angular/material/checkbox';
 import { LinkPreviewComponent } from './components/link-preview/link-preview.component';
 import { CommentComponent } from './components/comment/comment.component';
 import { ReplyComponent } from './components/reply/reply.component';
+import { LoadingComponent } from './components/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ReplyComponent } from './components/reply/reply.component';
     LinkPreviewComponent,
     CommentComponent,
     ReplyComponent,
+    LoadingComponent,
   ],
   imports: [
     CommonModule,
@@ -42,7 +44,8 @@ import { ReplyComponent } from './components/reply/reply.component';
     NavbarComponent,
     NavPollComponent,
     LinkPreviewComponent,
-    ReplyComponent
+    ReplyComponent,
+    LoadingComponent
   ],
 })
 export class SharedModule { }

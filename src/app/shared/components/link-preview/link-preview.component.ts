@@ -28,7 +28,6 @@ export class LinkPreviewComponent implements OnInit {
     this.loading = true;
     this.articleService.getArticleMetaTags(this.linkInfo['_id']).pipe(takeUntil(this._unsubscribe)).subscribe((result)=>{
       this.metaTags = result;
-      console.log(result)
       this.loading = false;
     })
   }

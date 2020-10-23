@@ -12,8 +12,8 @@ export class ProfileService {
     return this.webReqService.patch('account/update', { ...items });
   }
 
-  getProfile(handle) {
-    return this.webReqService.get('account/',{handle});
+  getProfilePost(handle) {
+    return this.webReqService.get('account/posted',{handle});
   }
 
   getUserProfile(id) {

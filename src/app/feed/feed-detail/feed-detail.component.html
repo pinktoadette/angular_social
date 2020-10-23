@@ -6,8 +6,7 @@
       </p>
     </figure>
 
-    <div style="display: flex;
-    flex-direction: column;">
+    <div style="width: 100%">
     <div class="media-content" *ngIf="hasComment">
       <div class="content response-content"  (click)="articleDetails()">
         <p>
@@ -23,11 +22,9 @@
       </small>
       <br>
     </div>
-    <div>
-      <app-link-preview [linkInfo]="articleInfo"></app-link-preview>
-    </div>
-    </div>
-    
+    <app-link-preview [linkInfo]="articleInfo"></app-link-preview>
+
+    </div>    
   </article>
   
 </div>
