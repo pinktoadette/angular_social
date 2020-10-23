@@ -1,4 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { PollFormComponent } from './shared/components/poll-form/poll-form.component';
 import { AuthService } from './shared/services/auth.service';
 
 @Component({
@@ -16,7 +18,9 @@ export class AppComponent implements OnInit{
   isLoggedIn: boolean = false;
   handle: string;
 
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService,
+    public dialog: MatDialog
+    ) {}
   
   ngOnInit() {
     this.innerWidth = window.innerWidth;
@@ -24,6 +28,16 @@ export class AppComponent implements OnInit{
       this.isLoggedIn = val;
     });
     this.handle = this.auth.getUserHandle();
+  }
+
+  openForm() {
+    const dialogRef = this.dialog.open(PollFormComponent, {
+      width: '100%',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
   logout() {

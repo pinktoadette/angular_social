@@ -1,0 +1,11 @@
+@import '../main-styles.scss';
+
+.navbar-brand, .navbar-tabs {
+    background-color: $primary;
+    color: $primary-text;
+}
+
+.navbar, .mat-drawer-container.mat-sidenav-container{
+    background-color: $primary;
+    color: $primary-text;
+}

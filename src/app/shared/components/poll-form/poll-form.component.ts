@@ -30,6 +30,7 @@ export class PollFormComponent implements OnInit, OnDestroy{
   filteredHashtags: Observable<any>;
   hashtags: string[] = [];
   message: string;
+  textInput: string = '';
 
   subFake: Array<Object> = [
     {name: 'Misinformation', completed: false, color: 'warn'},
@@ -126,11 +127,32 @@ export class PollFormComponent implements OnInit, OnDestroy{
     this.submitArticle.controls['fakeType'].setValue(temp);
   }
 
+  parseText(text) {
+    const urlRegex = /^(https?:\/\/[^/]+(\/[\w-]+)+)/;
+    if (text.includes('#') ){
+      const startFinding= text.split('#')[1]
+      // this.selected(startFinding)
+      console.log(startFinding)
+    }
+    
+    if (text.includes('@')) {
+      const findPerson = text.split('@')[1]
+      // this.selected(findPerson)
+      console.log(findPerson)
+    }
+
+    if (text.match(urlRegex)) {
+      const url = text.match(urlRegex);
+      console.log(url)
+    }
+
+  }
+
+
   ngOnDestroy() {
     this._unsubscribe.next();
     this._unsubscribe.complete();
-  }
-  
+  }  
 
   private _checkUrl(url) {
     var reader = new XMLHttpRequest();

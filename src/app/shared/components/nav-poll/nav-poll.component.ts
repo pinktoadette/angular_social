@@ -27,7 +27,7 @@ export class NavPollComponent implements OnInit {
     'fake':0,
     'neutral':0
   }
-  sumAll = 0
+  sumAll = 1
 
   constructor(
     public dialog: MatDialog,

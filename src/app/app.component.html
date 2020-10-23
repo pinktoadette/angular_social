@@ -1,8 +1,14 @@
 <!-- <app-navbar></app-navbar> -->
-<div *ngIf="innerWidth <= 767">
+<ng-container *ngIf="innerWidth <= 767; else reg">
     <app-navbar></app-navbar>
     <div style="padding-bottom: 100px"></div>
-</div>
+</ng-container>
+<ng-template #reg>
+    <nav class="navbar">
+        <a class="navbar-brand title cursor-finger" href="/">
+            <h1 class="title">Beespit</h1></a>
+    </nav>
+</ng-template>
 <div class="container">
     <div class="row">
         <div class="col-md-2">
@@ -10,9 +16,6 @@
                 <div class="position-fixed">
                     <aside class="menu">
                         <ul class="menu-list">
-                            <li><a class="navbar-brand title cursor-finger" href="/">
-                                <h1 class="title">Beespit</h1></a></li>
-    
                             <div class="inline" *ngIf="!isLoggedIn">
                                 <li><a class="cursor-finger" href="/">Home</a></li>
                                 <li><a class="cursor-finger" [routerLink]="['/signup']">Signup</a></li>
@@ -51,7 +54,7 @@
         
         <ng-template #small>
             <div class="fab-you">
-                <button mat-mini-fab color="accent" aria-label="Add News">
+                <button mat-mini-fab color="accent" aria-label="Add News" (click)="openForm()">
                     <i class="fa fa-plus"></i>
                 </button>
             </div>

@@ -1,8 +1,9 @@
-<form [formGroup]="submitArticle" (ngSubmit)="onSubmit()">
+<div>
     <div class="field">
-        <label class="label">Link</label>
-        <div class="control has-icons-left has-icons-right">
-            <input class="input" type="url"
+            <textarea  class="textarea" ([ngModel])="textInput" placeholder="Make a comment on a link." (change)="parseText($event.target.value)">
+
+            </textarea>
+            <!-- <input class="input" type="url"
                 [ngClass]="brokenUrl || (!submitArticle.controls['url'].valid && submitArticle.controls['url']?.touched) ? 'is-danger': 'is-primary'"
                 placeholder="Url Address" pattern="https://.*" size="30" formControlName="url">
             <span class="icon is-small is-left">
@@ -11,14 +12,13 @@
             <span class="icon is-small is-right is-danger"
                 *ngIf="!submitArticle.controls['url'].valid && submitArticle.controls['url']?.touched">
                 <i class="fas fa-exclamation-triangle"></i>
-            </span>
-        </div>
+            </span> -->
         <p class="help is-danger"
             *ngIf="brokenUrl || (!submitArticle.controls['url'].valid && submitArticle.controls['url']?.touched)">
             Url is invalid</p>
     </div>
 
-    <div class="field">
+    <!-- <div class="field">
         <div class="control">
             <span class="icon is-small">
                 <i class="fas fa-hashtag"></i>
@@ -58,15 +58,15 @@
         <div class="control">
             <label class="radio">
                 <input type="radio" formControlName="real" value="fake">
-                Fake
+                #Fake
             </label>
             <label class="radio">
                 <input type="radio" formControlName="real" value="real">
-                Real
+                #Real
             </label>
             <label class="radio">
                 <input type="radio" formControlName="real" value="debatable">
-                Debatable
+                #Debatable
             </label>
         </div>
         <small>Values may change after polling.</small>
@@ -80,15 +80,15 @@
               {{fa.name}}
             </mat-checkbox>
           </li>
-    </div>
+    </div> -->
 
     <div class="field is-grouped">
         <div class="control">
-            <button class="button is-link" type="submit"  [disabled]="!submitArticle.valid">Submit</button>
+            <button class="button is-primary" type="submit"  [disabled]="!submitArticle.valid">Submit</button>
         </div>
     </div>
     {{ message }}
         <br>
         <br>    &nbsp;
-</form>
+</div>
 

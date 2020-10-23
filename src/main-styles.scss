@@ -8,10 +8,16 @@ $turquoise: #44ddd0;
 $softred: #dd4451; //complement
 
 $green: #27d7a1;
-$strong-pink: #d7275d; //complement
 
 $light-green: #45f69e; 
 $dark-green: rgb(0, 100, 80);
+
+$yellow: #ffd740;
+$blue: #4068ff; // all complement below to yellow
+$strong-pink: #ff4068;
+$orange: #ff7840;
+$purple: #7840ff;
+$tet-green: #0dffcc;
 
 $light: #f8f8f8;
 
@@ -20,17 +26,23 @@ $gray-100: #f9f9f9;
 $gray-200: #ededed;
 $gray-300: #e0e0e0;
 $gray-400:#d3d3d3;
+$gray-500: #5d5d5d;
+$dark-gray: #222222;
 $white: #fff;
 $neutral: #e3bd67;
 
 $border-radius: 20px;
 $progress-border-radius: 20px;
 
+$primary: $yellow;
+$primary-text: $black;
+$primary-complement: $blue;
+$primary-comp-text: $white;
+
 // Update Bulma's global variables
 $family-sans-serif: "Nunito", sans-serif;
-$primary: $green;
 
-$link: $turquoise;
+$link: $dark-gray;
 
 
 // Update some of Bulma's component variables
@@ -76,7 +88,7 @@ html, body {
 
 .white-box {
     padding: 35px;
-    background: white;
+    background: $white;
     border-radius: 5px;
 
     width: 350px;
@@ -86,7 +98,7 @@ html, body {
 
 .article-frame{
     border-radius: 10px;
-    border: 1px solid #dfdfdf;
+    border: 1px solid $gray-100;
     padding: 20px;
 
     img{
@@ -107,15 +119,15 @@ html, body {
 
 .progress-real {
     background-color: $green;
-    color: $white;
-}
+    color: $gray-500;
+}   
 .progress-fake {
     background-color: $strong-pink;
-    color: $white;
+    color: $gray-500;
 }
 .progress-neutral {
-    background-color: $neutral;
-    color: $white;
+    background-color: $orange;
+    color: $gray-500;
 }
   
 .text-real {
@@ -127,7 +139,7 @@ html, body {
   font-weight: 500;
 }
 .text-neutral {
-  color: $neutral;
+  color: $orange;
   font-weight: 500;
 }
 
