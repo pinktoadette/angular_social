@@ -18,6 +18,7 @@ import { LinkPreviewComponent } from './components/link-preview/link-preview.com
 import { CommentComponent } from './components/comment/comment.component';
 import { ReplyComponent } from './components/reply/reply.component';
 import { LoadingComponent } from './components/loading/loading.component';
+import { MentionModule } from 'angular-mentions';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { LoadingComponent } from './components/loading/loading.component';
     MatCheckboxModule,
     MatSidenavModule,
     BrowserAnimationsModule,
+    MentionModule
   ],
   exports:[
     PollFormComponent,

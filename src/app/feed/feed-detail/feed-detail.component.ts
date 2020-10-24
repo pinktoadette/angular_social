@@ -30,7 +30,6 @@ export class FeedDetailComponent implements OnInit {
 
   getComments(){
     this.articleService.getArticleTopComment(this.articleInfo._id).pipe(takeUntil(this._unsubscribe)).subscribe(response =>{
-      console.log(response)
     })
   }
 

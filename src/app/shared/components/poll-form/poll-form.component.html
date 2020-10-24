@@ -1,9 +1,32 @@
 <div>
     <div class="field">
-            <textarea  class="textarea" ([ngModel])="textInput" placeholder="Make a comment on a link." (change)="parseText($event.target.value)">
+        <p class="help is-success">Paste url, enter comment and vote. To vote use '^'</p>
+        <textarea class="textarea is-warning" type="text" 
+        #input
+        placeholder="@fakenews only does ^Fake #election. Check out this post."
+        [mentionConfig]="mentionConfig"
+        (searchTerm)="parseText($event)"
+        (closed)="mentionClose()"
+        [disabled]="!isLoggedIn"
+        (input)="textInput = $event.target.value"
+        ></textarea>
+    </div>
 
-            </textarea>
-            <!-- <input class="input" type="url"
+    <p class="help is-danger" *ngIf="!isLoggedIn">You need to login to submit.</p>
+    <p class="help is-danger" *ngIf="!submitArticle.valid">Url and vote is required.</p>
+    <div class="field is-grouped">
+        <div class="control">
+            <button class="button is-primary" type="submit" (click)="onSubmit()" [disabled]="!submitArticle.valid">Submit</button>
+        </div>
+    </div>
+    {{ message }}    
+        <br>
+        <br>    &nbsp;
+</div>
+
+
+    <!-- <div class="field">
+            <input class="input" type="url"
                 [ngClass]="brokenUrl || (!submitArticle.controls['url'].valid && submitArticle.controls['url']?.touched) ? 'is-danger': 'is-primary'"
                 placeholder="Url Address" pattern="https://.*" size="30" formControlName="url">
             <span class="icon is-small is-left">
@@ -12,13 +35,13 @@
             <span class="icon is-small is-right is-danger"
                 *ngIf="!submitArticle.controls['url'].valid && submitArticle.controls['url']?.touched">
                 <i class="fas fa-exclamation-triangle"></i>
-            </span> -->
+            </span>
         <p class="help is-danger"
             *ngIf="brokenUrl || (!submitArticle.controls['url'].valid && submitArticle.controls['url']?.touched)">
             Url is invalid</p>
     </div>
 
-    <!-- <div class="field">
+    <div class="field">
         <div class="control">
             <span class="icon is-small">
                 <i class="fas fa-hashtag"></i>
@@ -81,14 +104,4 @@
             </mat-checkbox>
           </li>
     </div> -->
-
-    <div class="field is-grouped">
-        <div class="control">
-            <button class="button is-primary" type="submit"  [disabled]="!submitArticle.valid">Submit</button>
-        </div>
-    </div>
-    {{ message }}
-        <br>
-        <br>    &nbsp;
-</div>
 

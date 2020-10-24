@@ -1,49 +1,68 @@
 <div class="centered-content">
   <div class="white-box">
-
-    <h1 class="title has-text-primary">Sign up</h1>
-    <div class="field">
-      <p class="control has-icons-left has-icons-right">
-        <input #handleInput class="input has-background-light" type="text" placeholder="Handle">
-        <span class="icon is-small is-left">
-          <i class="fas fa-at"></i>
-        </span>
-      </p>
-    </div>
-    <div class="field">
-      <p class="control has-icons-left has-icons-right">
-        <input #emailInput class="input has-background-light" type="email" placeholder="Email">
-        <span class="icon is-small is-left">
-          <i class="fas fa-envelope"></i>
-        </span>
-      </p>
-    </div>
-    <div class="field">
-      <p class="control has-icons-left">
-        <input #pwInput class="input has-background-light" type="password" placeholder="Password">
-        <span class="icon is-small is-left">
-          <i class="fas fa-lock"></i>
-        </span>
-      </p>
-    </div>
-    <div class="field">
-      <div class="control">
-        <label class="checkbox">
-          <input type="checkbox">
-          I agree to the <a href="#">terms and conditions</a>
-        </label>
+    <form [formGroup]="registerForm" (ngSubmit)="onSignupButtonClicked()">
+      <h1 class="title has-text-primary">Sign up</h1>
+      <div class="field">
+        <p class="control has-icons-left has-icons-right">
+          <input class="input has-background-light" 
+          type="text"
+          formControlName="handle" placeholder="Handle">
+          <span class="icon is-small is-left">
+            <i class="fas fa-at"></i>
+          </span>
+        </p>
+        <p class="help is-danger" *ngIf="registerForm.controls['handle'].touched && 
+          registerForm.get('handle').hasError('handle')">
+            Requires at least 3 characters</p>
+            <p class="help is-danger" *ngIf="handleExists">
+            Handle already exists</p>
       </div>
-    </div>
-    <div class="field" style="display: flex; justify-content: flex-end;">
-      <p class="control">
-        <button class="button is-success has-text-white" (click)="onSignupButtonClicked(emailInput.value, pwInput.value, handleInput.value)">
-          Sign up
-        </button>
-      </p>
-    </div>
-    <br>
-    
+      <div class="field">
+        <p class="control has-icons-left has-icons-right">
+          <input class="input has-background-light" 
+          formControlName="email" type="email" placeholder="Email">
+          <span class="icon is-small is-left">
+            <i class="fas fa-envelope"></i>
+          </span>
+        </p>
+        <p class="help is-danger" *ngIf="registerForm.controls['email'].touched && 
+          registerForm.get('email').hasError('email')">
+            Email is invalid</p>
+      </div>
+      <div class="field">
+        <p class="control has-icons-left">
+          <input class="input has-background-light"
+          formControlName="password" type="password" placeholder="Password">
+          <span class="icon is-small is-left">
+            <i class="fas fa-lock"></i>
+          </span>
+        </p>
+        <p class="help is-danger" *ngIf="registerForm.controls['password'].touched && 
+          registerForm.get('password').hasError('password')">
+            Min length 10</p>
+      </div>
+      <div class="field">
+        <div class="control">
+          <label class="checkbox">
+            <input type="checkbox" formControlName="isAgreed">
+            I agree to the <a href="#">terms and conditions</a>
+          </label>
+          <p class="help is-danger" *ngIf="registerForm.controls['isAgreed'].touched && 
+          registerForm.get('isAgreed').hasError('isAgreed')">
+            Agree to terms and conditions</p>
+        </div>
+      </div>
+      <div class="field" style="display: flex; justify-content: flex-end;">
+        <p class="control">
+          <button class="button is-success has-text-white" 
+          [disabled]="!registerForm.valid && registerForm.get('isAgreed').value === false " >
+            Sign up
+          </button>
+        </p>
+      </div>
+      <br>
 
+    </form>
     <p class="has-text-grey">Already got an account? <a routerLink="/login">Login</a> now!</p>
 
   </div>

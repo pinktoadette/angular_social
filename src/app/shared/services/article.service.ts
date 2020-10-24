@@ -43,5 +43,9 @@ export class ArticleService {
   allVoteTally(articleId) {
     return this.webReqService.get('articles/poll_count', {articleId})
   }
+
+  getMentions(handle) {
+    return this.webReqService.get('mentions/', {handle})
+  }
 }
 

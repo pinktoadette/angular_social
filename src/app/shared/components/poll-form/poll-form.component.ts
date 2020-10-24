@@ -1,12 +1,10 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { ArticleService } from '../../services/article.service';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import { debounceTime, distinctUntilChanged, filter, map, startWith, switchMap, take, takeUntil } from 'rxjs/operators';
-import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { MatChipInputEvent } from '@angular/material/chips';
-import { WebRequestService } from '../../services/web-request.service';
+import { take } from 'rxjs/operators';
+import { MatAutocomplete } from '@angular/material/autocomplete';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-poll-form',
@@ -16,21 +14,24 @@ import { WebRequestService } from '../../services/web-request.service';
 export class PollFormComponent implements OnInit, OnDestroy{
   @ViewChild('hashtagInput') hashtagInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
+  @HostListener('input') onInput() {
+      const urlRegex = /([\w+]+\:\/\/)?([\w\d-]+\.)*[\w-]+[\.\:]\w+([\/\?\=\&\#]?[\w-]+)*\/?/gm;
+    if (this.textInput.match(urlRegex)) {
+      const url = this.textInput.match(urlRegex);
+      this.submitArticle.controls['url'].setValue(url[0]);
+    }
+
+    this.submitArticle.controls['comment'].setValue(this.textInput)
+}
   
   submitArticle: FormGroup;
   brokenUrl: boolean = false;
-  search: string;
-  searchItems: Array<string>;
 
   visible = true;
-  selectable = true;
-  removable = true;
-  separatorKeysCodes: number[] = [ENTER, COMMA];
-  hashtagCtrl = new FormControl();
-  filteredHashtags: Observable<any>;
+  
   hashtags: string[] = [];
   message: string;
-  textInput: string = '';
+  textInput: string;
 
   subFake: Array<Object> = [
     {name: 'Misinformation', completed: false, color: 'warn'},
@@ -39,30 +40,49 @@ export class PollFormComponent implements OnInit, OnDestroy{
     {name: 'Image/Video Manipulation', completed: false, color: 'warn'},
     {name: 'Other', completed: false, color: 'warn'}
   ]
+  fakeVote = {
+    items: [ "Fake", "Real", "Neutral"],
+    triggerChar: '^',
+    returnTrigger: true
+  }
+  isLoggedIn: boolean;
+  mentionConfig = {}  
+  lastCharSelected: string;
 
   private _unsubscribe = new Subject<any>();
 
   constructor(
     private hashtagService: ArticleService,
-    private webService: WebRequestService
+    private authService: AuthService
   ) { 
-    this.filteredHashtags = this.hashtagCtrl.valueChanges.pipe(
-      startWith(''),
-          debounceTime(400),
-          distinctUntilChanged(),
-          switchMap(val => {
-            return this.hashtagService.getHashTags(val)
-          })      
-    );
+    this.isLoggedIn = this.authService.isLoggedIn();
+
   }
 
   ngOnInit(): void {
+    this.mentionConfig = {
+      mentions: [
+        {
+          items: [],
+          triggerChar: '@',
+          returnTrigger: true
+        },
+        {
+          items: [],
+          triggerChar: '#',
+          returnTrigger: true
+        },
+          this.fakeVote
+        ]
+    }
     const urlRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
 
     this.submitArticle = new FormGroup({
       'url': new FormControl(null, [Validators.required, Validators.pattern(urlRegex)]),
       'real': new FormControl(null, [Validators.required]),
       'hashtag': new FormControl(null, []),
+      'mention': new FormControl(null, []),
+      'comment': new FormControl(null, []),
       'fakeType': new FormControl([])
     });
   }
@@ -77,48 +97,13 @@ export class PollFormComponent implements OnInit, OnDestroy{
         console.log(result)
         this.submitArticle.reset();
         this.message = "Submitted"
-
+        this.textInput = '';
       }, err=>{
         this.message = err['error']['message'];
       })
     }
   }
 
-  add(event: MatChipInputEvent): void {
-    const input = event.input;
-    const value = event.value;
-    if (this.hashtags.length > 5) {
-      return
-    }
-
-    if ((value || '').trim()) {
-      this.hashtags.push(value.trim());
-    }
-
-    if (input) {
-      input.value = '';
-    }
-
-    this.hashtagCtrl.setValue(null);
-  }
-
-  remove(tag: string): void {
-    const index = this.hashtags.indexOf(tag);
-
-    if (index >= 0) {
-      this.hashtags.splice(index, 1);
-    }
-  }
-
-  selected(event: MatAutocompleteSelectedEvent): void {
-    if (this.hashtags.length > 5) {
-      return
-    }
-    
-    this.hashtags.push(event.option.viewValue);
-    this.hashtagInput.nativeElement.value = '';
-    this.hashtagCtrl.setValue(null);
-  }
 
   updateFakeSelection(item) {
     const prevVal = this.submitArticle.controls['fakeType'].value;
@@ -127,25 +112,62 @@ export class PollFormComponent implements OnInit, OnDestroy{
     this.submitArticle.controls['fakeType'].setValue(temp);
   }
 
-  parseText(text) {
-    const urlRegex = /^(https?:\/\/[^/]+(\/[\w-]+)+)/;
+  parseText(evt) {
+    const text = evt
+    
     if (text.includes('#') ){
       const startFinding= text.split('#')[1]
-      // this.selected(startFinding)
-      console.log(startFinding)
+      this.hashtagService.getHashTags(startFinding).subscribe((response)=>{
+          const  x = [].concat(response || [])
+          const items = x.reduce((acc, ele) => {
+            acc.push(ele['hashtag'])
+            return acc
+          }, [])
+          this.updateMentionConfig(items, '#')
+        }
+      )
     }
-    
     if (text.includes('@')) {
       const findPerson = text.split('@')[1]
-      // this.selected(findPerson)
-      console.log(findPerson)
+      this.hashtagService.getMentions(findPerson).subscribe((response)=>{
+        const  x = [].concat(response || [])
+        const items = x.reduce((acc, ele) => {
+          acc.push(ele['handle'])
+          return acc
+        }, [])
+        this.updateMentionConfig(items, '@')
+      }
+    )
     }
 
-    if (text.match(urlRegex)) {
-      const url = text.match(urlRegex);
-      console.log(url)
+    if (text.includes('^')) {
+      this.lastCharSelected = '^'
     }
+  }
 
+  mentionClose() {
+    const slice = this.textInput.slice(this.textInput.lastIndexOf(this.lastCharSelected), this.textInput.length)
+    switch(this.lastCharSelected) {
+      case '#':
+        let tags;
+        if (!this.submitArticle.controls.hashtag) {
+          debugger;
+          tags = this.submitArticle.get('hashtag').value
+        } else {
+          tags = slice.split(this.lastCharSelected)[1];
+        }
+        this.submitArticle.controls['hashtag'].setValue(tags)
+        break;
+      case '@':
+        //const user = this.submitArticle.get('user').value;
+        this.submitArticle.controls['mention'].setValue(slice.split(this.lastCharSelected)[1])
+        break;
+      case '^':
+        this.submitArticle.controls['real'].setValue( slice.split(this.lastCharSelected)[1])
+        break;
+      default:
+        break;
+    }
   }
 
 
@@ -153,6 +175,29 @@ export class PollFormComponent implements OnInit, OnDestroy{
     this._unsubscribe.next();
     this._unsubscribe.complete();
   }  
+
+  private updateMentionConfig(items, trigger) {
+    const spreadMe = trigger === '@' ? {
+      items: [],
+      triggerChar: '#',
+      returnTrigger: true
+    } : {
+      items: [],
+      triggerChar: '@',
+      returnTrigger: true
+    }
+
+    this.mentionConfig = {
+      mentions: [{
+      items,
+      triggerChar: trigger,
+      returnTrigger: true
+      },
+      spreadMe,
+      this.fakeVote
+    ]}
+    this.lastCharSelected = trigger;
+  }
 
   private _checkUrl(url) {
     var reader = new XMLHttpRequest();
