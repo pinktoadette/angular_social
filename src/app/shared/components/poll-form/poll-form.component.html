@@ -1,4 +1,7 @@
 <div>
+    <h4 class="title is-4">
+        SPIT
+    </h4>
     <div class="field">
         <p class="help is-success">Paste url, enter comment and vote. To vote use '^'</p>
         <textarea class="textarea is-warning" type="text" 
@@ -13,7 +16,7 @@
     </div>
 
     <p class="help is-danger" *ngIf="!isLoggedIn">You need to login to submit.</p>
-    <p class="help is-danger" *ngIf="!submitArticle.valid">Url and vote is required.</p>
+    <p class="help is-danger" *ngIf="!submitArticle.valid && isLoggedIn">Url and vote is required.</p>
     <div class="field is-grouped">
         <div class="control">
             <button class="button is-primary" type="submit" (click)="onSubmit()" [disabled]="!submitArticle.valid">Submit</button>
