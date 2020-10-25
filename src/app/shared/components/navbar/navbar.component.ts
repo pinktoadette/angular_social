@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -7,6 +7,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
+  handle: string;
   showBurgerMenu: boolean;
   isLoggedIn: boolean = false;
   constructor(
@@ -15,6 +16,8 @@ export class NavbarComponent implements OnInit {
     this.auth.loggedIn.subscribe(val => {
       this.isLoggedIn = val;
     });
+
+    this.handle = this.auth.getUserHandle();
   }
 
   ngOnInit(): void {

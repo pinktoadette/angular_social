@@ -15,17 +15,17 @@
 
   <mat-sidenav-container *ngIf="showBurgerMenu">
     <mat-sidenav-content>
-      <ul style="text-align: right; width: 100%">
+      <ul style="text-align: right; width: 100%" id="menu-navbar">
         <div class="inline" *ngIf="!isLoggedIn">
           <li><a class="cursor-finger" href="/">Home</a></li>
-          <li><a class="cursor-finger" [routerLink]="['/signup']">Signup</a></li>
-          <li><a [routerLink]="['/login']">Login</a></li>
+          <li><a class="cursor-finger" href="/signup">Signup</a></li>
+          <li><a href="/login">Login</a></li>
         </div>
 
         <div class="inline" *ngIf="isLoggedIn">
           <li><a href="/">Home</a></li>
-          <li *ngIf="handle"><a [routerLink]="['/p', handle]">Profile</a></li>
-          <li><a [routerLink]="['/notifications']">Notifications</a></li>
+          <li *ngIf="handle"><a href="/p/{{handle}}">Profile</a></li>
+          <li><a href="/notifications">Notifications</a></li>
           <li><a (click)="logout()">Logout</a></li>
         </div>
       </ul>
