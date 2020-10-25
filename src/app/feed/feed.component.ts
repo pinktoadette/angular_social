@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Article } from '../shared/models/article.model';
@@ -10,11 +10,11 @@ import { FeedService } from './feed.service';
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.scss']
 })
-export class FeedComponent implements OnInit {
+export class FeedComponent implements OnInit, OnDestroy {
   articles: Partial<Article>[] = []
   loading: boolean = false;
 
-  _unsubscribe: Subject<any> = new Subject<any>();
+  _unsubscribe = new Subject();
   constructor(
     private feedService: FeedService,
     private auth: AuthService
@@ -45,6 +45,11 @@ export class FeedComponent implements OnInit {
 
   logout() {
     this.auth.logout();
+  }
+
+  ngOnDestroy() {
+    this._unsubscribe.next();
+    this._unsubscribe.complete();
   }
 
 }

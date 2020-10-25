@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login-page',
@@ -16,10 +17,10 @@ export class LoginPageComponent implements OnInit {
   }
 
   onLoginButtonClicked(email: string, password: string) {
-    this.authService.login(email, password).subscribe((res: HttpResponse<any>) => {
+    this.authService.login(email, password).pipe(take(1)).subscribe((res: HttpResponse<any>) => {
       if (res.status === 200) {
         // we have logged in successfully
-        this.router.navigate(['/']);
+        this.router.navigateByUrl('/');
       }
       console.log(res);
       

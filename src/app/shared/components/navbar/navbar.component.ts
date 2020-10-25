@@ -13,14 +13,14 @@ export class NavbarComponent implements OnInit {
   constructor(
     private auth: AuthService
   ) { 
+  }
+
+  ngOnInit(): void {
     this.auth.loggedIn.subscribe(val => {
       this.isLoggedIn = val;
     });
 
     this.handle = this.auth.getUserHandle();
-  }
-
-  ngOnInit(): void {
   }
 
 }

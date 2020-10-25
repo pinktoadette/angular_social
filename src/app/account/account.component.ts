@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
@@ -10,12 +10,12 @@ import { ProfileService } from '../shared/services/profile.service';
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.scss']
 })
-export class AccountComponent implements OnInit {
+export class AccountComponent implements OnInit, OnDestroy {
   submitProfile: FormGroup;
   userProfile: any;
   handleUnavailable: boolean = true;
 
-  private _unsubscribe = new Subject<any>();
+  private _unsubscribe = new Subject();
   constructor(
     private profileService: ProfileService,
     private authService: AuthService
@@ -47,4 +47,8 @@ export class AccountComponent implements OnInit {
     })
   }
 
+  ngOnDestroy() {
+    this._unsubscribe.next();
+    this._unsubscribe.complete();
+  }
 }

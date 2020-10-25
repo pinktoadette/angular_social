@@ -8,21 +8,7 @@
 
     <div style="width: 100%">
     <div class="media-content" *ngIf="hasComment">
-      <div class="content response-content"  (click)="articleDetails()">
-        <p>
-          <strong>{{ showComment.user?.displayname}} 
-            <a [routerLink]="['/p', showComment.user.handle ]">{{showComment.user.handle }}</a>
-            <span class="badge">{{ showComment.type | titlecase }} comment</span></strong>
-          <br>
-          {{ showComment.reply }}
-          <br>
-        </p>
-      </div>
-      <small class="response-likes"><a>Like</a> · 
-        <a (click)="openDialogComment()">Reply</a> 
-          {{ showComment?.submittedDate | date: 'MM-dd-yy' }}
-      </small>
-      <br>
+      <app-reply [oneComment]="showComment" [articleId]="articleId"></app-reply>
     </div>
     <app-link-preview [linkInfo]="articleInfo"></app-link-preview>
 

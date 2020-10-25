@@ -44,8 +44,16 @@ export class ArticleService {
     return this.webReqService.get('articles/poll_count', {articleId})
   }
 
-  getMentions(handle) {
+  getMentions(handle: string) {
     return this.webReqService.get('mentions/', {handle})
+  }
+
+  likeItem(item: Object) {
+    return this.webReqService.post('social/likes', {item}).pipe(tap(data => data))
+  } 
+
+  getItemLiked(item) {
+    return this.webReqService.get('social/likes', {item})
   }
 }
 

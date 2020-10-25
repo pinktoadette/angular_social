@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -10,7 +10,7 @@ import { ProfileService } from '../shared/services/profile.service';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
   profile: any;
   loading: boolean = false;
   userHandle: string;
@@ -23,7 +23,7 @@ export class ProfileComponent implements OnInit {
     'comments': 0
   }
 
-  private _unsubscribe = new Subject<any>();
+  private _unsubscribe = new Subject();
   constructor(
     private profileService: ProfileService,
     private authService: AuthService,
@@ -47,4 +47,8 @@ export class ProfileComponent implements OnInit {
     this.viewThis = ele;
   }
 
+  ngOnDestroy() {
+    this._unsubscribe.next();
+    this._unsubscribe.complete();
+  }
 }
