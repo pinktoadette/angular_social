@@ -91,10 +91,9 @@ export class PollFormComponent implements OnInit, OnDestroy{
     const url = this.submitArticle.value['url']
     this.brokenUrl = !this._checkUrl(url);
     if (this.brokenUrl) {
-      return
+      this.message = "Broken url"
     } else {
       this.hashtagService.submitArticle({...this.submitArticle.value, hashtags: this.hashtags}).pipe(take(1)).subscribe(result=> {
-        console.log(result)
         this.submitArticle.reset();
         this.message = "Submitted"
         this.textInput = '';
@@ -151,7 +150,6 @@ export class PollFormComponent implements OnInit, OnDestroy{
       case '#':
         let tags;
         if (!this.submitArticle.controls.hashtag) {
-          debugger;
           tags = this.submitArticle.get('hashtag').value
         } else {
           tags = slice.split(this.lastCharSelected)[1];

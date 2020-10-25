@@ -15,6 +15,7 @@ import { ArticleService } from 'src/app/shared/services/article.service';
 export class FeedDetailComponent implements OnInit {
   @Input() articleInfo: Partial<Article>;
   hasComment: boolean = false;
+  showComment: {}
 
   private _unsubscribe: Subject<any> = new Subject<any>();
   
@@ -30,8 +31,12 @@ export class FeedDetailComponent implements OnInit {
 
   getComments(){
     this.articleService.getArticleTopComment(this.articleInfo._id).pipe(takeUntil(this._unsubscribe)).subscribe(response =>{
+      if (response['user']) {
+        this.showComment = response;
+        this.hasComment = true;
+      }
     })
-  }
+  } 
 
   openDialogComment() {
     const dialogRef = this.dialog.open(CommentComponent, {
@@ -45,7 +50,7 @@ export class FeedDetailComponent implements OnInit {
   }
 
   articleDetails() {
-    const title = this.articleInfo['og:title'].trim().replace(/\s/g , "-");
+    const title = this.articleInfo['_id'].trim().replace(/\s/g , "-");
     this.route.navigateByUrl(`/article/${title}`, { state: { articleId: this.articleInfo['_id'], articleInfo: this.articleInfo } });
   }
 

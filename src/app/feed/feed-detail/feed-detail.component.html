@@ -10,15 +10,17 @@
     <div class="media-content" *ngIf="hasComment">
       <div class="content response-content"  (click)="articleDetails()">
         <p>
-          <strong>Sean Brown <span class="badge">Top comment</span></strong>
+          <strong>{{ showComment.user?.displayname}} 
+            <a [routerLink]="['/p', showComment.user.handle ]">{{showComment.user.handle }}</a>
+            <span class="badge">{{ showComment.type | titlecase }} comment</span></strong>
           <br>
-         {{articleInfo['commentsObjects'][0]?.reply }}
+          {{ showComment.reply }}
           <br>
         </p>
       </div>
       <small class="response-likes"><a>Like</a> · 
         <a (click)="openDialogComment()">Reply</a> 
-          {{articleInfo['commentsObjects'][0]?.submittedDate | date: 'MM-dd-yyyy' }}
+          {{ showComment?.submittedDate | date: 'MM-dd-yy' }}
       </small>
       <br>
     </div>
