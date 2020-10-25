@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { ArticleService } from '../../services/article.service';
+import { CommentComponent } from '../comment/comment.component';
 
 @Component({
   selector: 'app-reply',
@@ -13,7 +14,8 @@ export class ReplyComponent implements OnInit {
 
   articleInfo;
   constructor(
-    private articleSerivce: ArticleService
+    private articleSerivce: ArticleService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -23,6 +25,17 @@ export class ReplyComponent implements OnInit {
     this.articleSerivce.likeItem({articleId: this.articleId}).pipe(take(1)).subscribe(response => {
       console.log(response)
     })
+  }
+
+  openDialogComment() {
+    const dialogRef = this.dialog.open(CommentComponent, {
+      width: '250px',
+      data: {article: this.articleInfo}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
 }
