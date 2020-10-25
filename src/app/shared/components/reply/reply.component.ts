@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { take } from 'rxjs/operators';
 import { ArticleService } from '../../services/article.service';
 import { CommentComponent } from '../comment/comment.component';
