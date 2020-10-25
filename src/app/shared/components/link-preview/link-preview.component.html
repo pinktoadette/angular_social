@@ -5,14 +5,11 @@
 <div class="card" *ngIf="!loading && metaTags">
     <div (click)="openLink(metaTags['url'])">
       <div class="card-content">
-        <p class="title is-4">{{metaTags['og:title']}}</p>
-  
         <div class="content">
           {{metaTags['og:description']}}
           <a href="#" *ngFor="let hashtag of  linkInfo['hashtags']">#{{hashtag}}</a>
-          <br>
-          <small>{{metaTags['og:site_name']}}</small>
-        </div>
+          <small><i>{{metaTags['og:site_name']}}</i></small>
+        </div>  
       </div>
     </div>
     <app-nav-poll [articleInfo]="linkInfo" [metaTags]="metaTags"></app-nav-poll>
@@ -21,4 +18,5 @@
         <img [src]="metaTags['og:image']" alt="{{metaTags['og:title']}}">
       </figure>
     </div>
+
 </div>
