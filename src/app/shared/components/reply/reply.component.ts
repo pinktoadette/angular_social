@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { ArticleService } from '../../services/article.service';
 import { CommentComponent } from '../comment/comment.component';
@@ -15,6 +16,7 @@ export class ReplyComponent implements OnInit {
 
   articleInfo;
   constructor(
+    private route: Router,
     private articleSerivce: ArticleService,
     public dialog: MatDialog
   ) {}
@@ -37,6 +39,11 @@ export class ReplyComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
+  }
+
+  articleDetails() {
+    const title = this.articleInfo['_id'].trim().replace(/\s/g , "-");
+    this.route.navigateByUrl(`/article/${title}`, { state: { articleId: this.articleInfo['_id'], articleInfo: this.articleInfo } });
   }
 
 }
