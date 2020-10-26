@@ -54,13 +54,13 @@ export class FeedComponent implements OnInit, OnDestroy {
   }
 
   onScrollUp() {
-    this.loading = true;
-    const currDate = new Date();
-    this.feedService.latestFeed(0, currDate).pipe(takeUntil(this._unsubscribe)).subscribe((result) => {
-      const x = [].concat(result || [])
-      this.articles = !this.articles ? x : [...this.articles, ...x]
-      this.loading = false;
-    })
+    // this.loading = true;
+    // const currDate = new Date();
+    // this.feedService.latestFeed(0, currDate).pipe(takeUntil(this._unsubscribe)).subscribe((result) => {
+    //   const x = [].concat(result || [])
+    //   this.articles = !this.articles ? x : [...this.articles, ...x]
+    //   this.loading = false;
+    // })
   }
 
   onScroll() {
