@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -15,9 +15,15 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 })
 export class FeedDetailComponent implements OnInit, OnDestroy {
   @Input() articleInfo: Partial<Article>;
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.innerWidth = window.innerWidth;
+  }
+  innerWidth: number;
   hasComment: boolean = false;
   showComment: {}
   isLike: boolean = false;
+  metaTags: any;
 
   private _unsubscribe = new Subject<any>();
   
@@ -29,11 +35,19 @@ export class FeedDetailComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.innerWidth = window.innerWidth;
+    this.getMetaTags();
     this.getComments();
 
     if (this.authService.isLoggedIn() && !!this.articleInfo._id){
       this.getArticleLikes();
     }
+  }
+
+  getMetaTags() {
+    this.articleService.getArticleMetaTags(this.articleInfo._id).pipe(takeUntil(this._unsubscribe)).subscribe((result)=>{
+      this.metaTags = {...result, ...this.articleInfo};
+    })
   }
 
   getArticleLikes() {

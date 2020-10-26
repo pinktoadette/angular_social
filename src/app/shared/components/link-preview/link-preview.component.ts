@@ -15,7 +15,6 @@ export class LinkPreviewComponent implements OnInit, OnDestroy {
   onResize(event) {
     this.innerWidth = window.innerWidth;
   }
-  metaTags: any;
   loading: boolean = false;
   innerWidth: number;
   _unsubscribe = new Subject();
@@ -25,15 +24,7 @@ export class LinkPreviewComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {  
     this.innerWidth = window.innerWidth;
-    this.loading = true;
-
-    if (typeof(this.linkInfo['_id']) !== 'undefined' ) {
-      this.articleService.getArticleMetaTags(this.linkInfo['_id']).pipe(takeUntil(this._unsubscribe)).subscribe((result)=>{
-        this.metaTags = result;
-        this.loading = false;
-      })
-    }
-    
+    console.log(this.linkInfo)
   }
 
   openLink(link) {

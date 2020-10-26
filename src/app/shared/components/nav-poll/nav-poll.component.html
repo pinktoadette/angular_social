@@ -1,7 +1,6 @@
 <p>&nbsp;</p>
 <div class="progress">
-    <div class="cursor-finger progress-bar progress-{{vote.key}}" role="progressbar" [ngStyle]="{'width': vote.value/sumAll*100+'%' }" *ngFor="let vote of allVoteCount | keyvalue ">
-      {{vote.key | titlecase }}
+    <div class="cursor-finger progress-bar progress-{{vote.key.toLowerCase()}}" role="progressbar" [ngStyle]="{'width': vote.value/sumAll*100+'%' }" *ngFor="let vote of allVoteCount | keyvalue ">
     </div>
   </div>
 

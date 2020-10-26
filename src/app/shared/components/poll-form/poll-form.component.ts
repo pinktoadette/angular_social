@@ -15,13 +15,16 @@ export class PollFormComponent implements OnInit, OnDestroy{
   @ViewChild('hashtagInput') hashtagInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
   @HostListener('input') onInput() {
-      const urlRegex = /([\w+]+\:\/\/)?([\w\d-]+\.)*[\w-]+[\.\:]\w+([\/\?\=\&\#]?[\w-]+)*\/?/gm;
+    const urlRegex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/
+
+    let comment = this.textInput
     if (this.textInput.match(urlRegex)) {
       const url = this.textInput.match(urlRegex);
       this.submitArticle.controls['url'].setValue(url[0]);
+      comment = this.textInput.replace(urlRegex, '')
     }
-
-    this.submitArticle.controls['comment'].setValue(this.textInput)
+    
+    this.submitArticle.controls['comment'].setValue(comment)
 }
   
   submitArticle: FormGroup;
@@ -80,7 +83,7 @@ export class PollFormComponent implements OnInit, OnDestroy{
     this.submitArticle = new FormGroup({
       'url': new FormControl(null, [Validators.required, Validators.pattern(urlRegex)]),
       'real': new FormControl(null, [Validators.required]),
-      'hashtag': new FormControl(null, []),
+      'hashtags': new FormControl(null, []),
       'mention': new FormControl(null, []),
       'comment': new FormControl(null, []),
       'fakeType': new FormControl([])
@@ -145,16 +148,16 @@ export class PollFormComponent implements OnInit, OnDestroy{
   }
 
   mentionClose() {
-    const slice = this.textInput.slice(this.textInput.lastIndexOf(this.lastCharSelected), this.textInput.length)
+    let slice = this.textInput.slice(this.textInput.lastIndexOf(this.lastCharSelected), this.textInput.length)
+    slice = slice.split('\n')[0]
+    
     switch(this.lastCharSelected) {
       case '#':
-        let tags;
-        if (!this.submitArticle.controls.hashtag) {
-          tags = this.submitArticle.get('hashtag').value
-        } else {
-          tags = slice.split(this.lastCharSelected)[1];
-        }
-        this.submitArticle.controls['hashtag'].setValue(tags)
+        let tags = this.submitArticle.get('hashtags').value
+        const newTag = slice.split(this.lastCharSelected)[1];
+        tags.push(newTag);
+        console.log(tags)
+        this.submitArticle.controls['hashtags'].setValue(tags)
         break;
       case '@':
         //const user = this.submitArticle.get('user').value;

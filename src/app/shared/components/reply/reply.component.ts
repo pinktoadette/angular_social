@@ -12,7 +12,7 @@ import { CommentComponent } from '../comment/comment.component';
 })
 export class ReplyComponent implements OnInit {
   @Input() oneComment
-  @Input() articleId;
+  @Input() metaTags;
 
   articleInfo;
   constructor(
@@ -25,7 +25,7 @@ export class ReplyComponent implements OnInit {
   }
 
   likeComment() {
-    this.articleSerivce.likeItem({articleId: this.articleId}).pipe(take(1)).subscribe(response => {
+    this.articleSerivce.likeItem({articleId: this.metaTags._id}).pipe(take(1)).subscribe(response => {
       console.log(response)
     })
   }
@@ -33,7 +33,7 @@ export class ReplyComponent implements OnInit {
   openDialogComment() {
     const dialogRef = this.dialog.open(CommentComponent, {
       width: '250px',
-      data: {article: this.articleInfo}
+      data: {article: this.metaTags}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -42,8 +42,8 @@ export class ReplyComponent implements OnInit {
   }
 
   articleDetails() {
-    const title = this.articleInfo['_id'].trim().replace(/\s/g , "-");
-    this.route.navigateByUrl(`/article/${title}`, { state: { articleId: this.articleInfo['_id'], articleInfo: this.articleInfo } });
+    const title = this.metaTags['og:title'].trim().replace(/\s/g , "-");
+    this.route.navigateByUrl(`/article/${title}`, { state: { articleId: this.metaTags._id } });
   }
 
 }

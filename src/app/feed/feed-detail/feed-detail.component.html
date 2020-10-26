@@ -1,16 +1,16 @@
 <div>
   <article class="media">
     <figure class="media-left">
-      <p class="image is-96x96" *ngIf="hasComment">
+      <p class="image is-48x48" *ngIf="hasComment">
         <img src="https://bulma.io/images/placeholders/96x96.png">
       </p>
     </figure>
 
-    <div style="width: 100%">
+    <div [ngStyle]="{'width': innerWidth > 767 || !hasComment ? 100+ '%' : innerWidth-150 + 'px'}">
     <div class="media-content" *ngIf="hasComment">
-      <app-reply [oneComment]="showComment" [articleId]="articleId"></app-reply>
+      <app-reply [oneComment]="showComment" [metaTags]="metaTags"></app-reply>
     </div>
-    <app-link-preview [linkInfo]="articleInfo"></app-link-preview>
+    <app-link-preview [linkInfo]="metaTags"></app-link-preview>
 
     </div>    
   </article>

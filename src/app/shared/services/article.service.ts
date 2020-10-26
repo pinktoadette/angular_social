@@ -55,5 +55,9 @@ export class ArticleService {
   getItemLiked(item) {
     return this.webReqService.get('social/likes', {item})
   }
+
+  searchByTitle(title) {
+    return this.webReqService.get('search', {title})
+  }
 }
 

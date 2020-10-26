@@ -1,12 +1,10 @@
 <div class="content response-content"  (click)="articleDetails()">
-    <p>
       <strong>{{ oneComment.user?.displayname}} 
         <a [routerLink]="['/p', oneComment.user.handle ]">{{oneComment.user.handle }}</a>
         <span class="badge">{{ oneComment.type | titlecase }} comment</span></strong>
       <br>
-      {{ oneComment.reply }}
+      <div [innerHTML]="oneComment.reply"></div>
       <br>
-    </p>
   </div>
   <small class="response-likes"><a (click)="likeComment()">Like</a> · 
     <a (click)="openDialogComment()">Reply</a> 
