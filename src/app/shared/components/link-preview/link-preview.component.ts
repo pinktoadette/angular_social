@@ -23,8 +23,13 @@ export class LinkPreviewComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {  
+    // og:video:width, og:video:height: "360", og:video:secure_url, uploadDate
     this.innerWidth = window.innerWidth;
-    console.log(this.linkInfo)
+    if (!!this.linkInfo) {
+      this.articleService.getArticleMetaTags(this.linkInfo._id).pipe(takeUntil(this._unsubscribe)).subscribe(response => {
+        this.linkInfo = {...response, _id: this.linkInfo._id}
+      })
+    }
   }
 
   openLink(link) {

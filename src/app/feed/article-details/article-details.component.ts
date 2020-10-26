@@ -3,6 +3,10 @@ import { Location} from '@angular/common';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { CommentComponent } from 'src/app/shared/components/comment/comment.component';
+import { ArticleService } from 'src/app/shared/services/article.service';
+import { take, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-article-details',
@@ -12,22 +16,32 @@ import { CommentComponent } from 'src/app/shared/components/comment/comment.comp
 export class ArticleDetailsComponent implements OnInit {
 
   articleInfo: Object;
+  showComment: Object;
+  isLoggedIn: boolean;
+  private _unsubscribe = new Subject();
 
   constructor(
     private _location: Location,
     private activatedRoute: ActivatedRoute,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private articleService: ArticleService,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
+    this.isLoggedIn = this.authService.isLoggedIn();
+
     this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
-      if (!!window.history.state['articleId']) {
-        this.articleInfo = window.history.state['articleInfo']
-      } else {
         // search by title
-        console.log(params)
-      }
-  });
+        this.articleService.search('article',params['params']['articleId']).pipe(take(1)).subscribe(result => {
+          this.articleInfo = {...result[0]}
+        })
+
+      this.articleService.getComments(params['params']['articleId']).pipe(takeUntil(this._unsubscribe)).subscribe(response =>{
+        this.showComment = response
+      })
+    });
+    
   }
 
   openDialogComment() {

@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'signup', component: SignupPageComponent },
   { path: 'explore', component: FeedComponent},
   { path: 'article', component: ArticleDetailsComponent},
-  { path: 'article/:articleId', component: ArticleDetailsComponent},
+  { path: 'article/:articleId/:articleTitle', component: ArticleDetailsComponent},
   { path: 'account', component: AccountComponent,
     canActivate: [AuthGuard],
     resolve: { user: UserResolver },

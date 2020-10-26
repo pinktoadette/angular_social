@@ -43,7 +43,7 @@ export class ReplyComponent implements OnInit {
 
   articleDetails() {
     const title = this.metaTags['og:title'].trim().replace(/\s/g , "-");
-    this.route.navigateByUrl(`/article/${title}`, { state: { articleId: this.metaTags._id } });
+    this.route.navigateByUrl(`/article/${this.metaTags['searchId']}/${title}`, { state: { articleId: this.metaTags.searchId } });
   }
 
 }

@@ -45,7 +45,7 @@ export class ArticleService {
   }
 
   getMentions(handle: string) {
-    return this.webReqService.get('mentions/', {handle})
+    return this.webReqService.get('mentions', {handle})
   }
 
   likeItem(item: Object) {
@@ -56,8 +56,12 @@ export class ArticleService {
     return this.webReqService.get('social/likes', {item})
   }
 
-  searchByTitle(title) {
-    return this.webReqService.get('search', {title})
+  getComments(searchId) {
+    return this.webReqService.get('articles/comments', {searchId})
+  }
+
+  search(type, searchId) {
+    return this.webReqService.get('search', {type, searchId})
   }
 }
 
