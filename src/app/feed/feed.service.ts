@@ -10,8 +10,8 @@ export class FeedService {
     private webReqService: WebRequestService
   ) { }
 
-  latestFeed() {
-    return this.webReqService.get('articles/latest');
+  latestFeed(page, date) {
+    return this.webReqService.get('articles/latest',{page, date});
   }
 
   trendArticles() {

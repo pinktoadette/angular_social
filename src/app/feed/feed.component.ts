@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 import { Article } from '../shared/models/article.model';
 import { AuthService } from '../shared/services/auth.service';
 import { FeedService } from './feed.service';
@@ -11,8 +11,28 @@ import { FeedService } from './feed.service';
   styleUrls: ['./feed.component.scss']
 })
 export class FeedComponent implements OnInit, OnDestroy {
+  @HostListener("window:scroll", ['$event'])
+  scroll(): void {
+    const currDate = new Date()
+
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+      this.page += 1;
+      
+
+      if (window.innerWidth) {
+        this.feedService.latestFeed(this.page, currDate).pipe(take(1)).subscribe((result) => {
+          const x = [].concat(result || [])
+          this.articles = !this.articles ? x : [...this.articles, ...x]
+          this.loading = false;
+        })
+      }
+    }
+  }
+
   articles: Partial<Article>[] = []
   loading: boolean = false;
+
+  page: number = 0;
 
   _unsubscribe = new Subject();
   constructor(
@@ -23,20 +43,24 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
-    this.feedService.latestFeed().pipe(takeUntil(this._unsubscribe)).subscribe((result)=>{
-      const  x = [].concat(result || [])
-      this.articles = !this.articles ? x : [...this.articles,...x]
+    const currDate = new Date();
+
+    this.feedService.latestFeed(this.page, currDate).pipe(takeUntil(this._unsubscribe)).subscribe((result) => {
+      const x = [].concat(result || [])
+      this.articles = !this.articles ? x : [...this.articles, ...x]
       this.loading = false;
     })
- 
+
   }
 
-  onScrollDown() {
-    console.log('scrolled down!!');
-  }
- 
   onScrollUp() {
-    console.log('scrolled up!!');
+    this.loading = true;
+    const currDate = new Date();
+    this.feedService.latestFeed(0, currDate).pipe(takeUntil(this._unsubscribe)).subscribe((result) => {
+      const x = [].concat(result || [])
+      this.articles = !this.articles ? x : [...this.articles, ...x]
+      this.loading = false;
+    })
   }
 
   onScroll() {
