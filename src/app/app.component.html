@@ -4,7 +4,7 @@
     <div style="padding-bottom: 100px"></div>
 </ng-container>
 <ng-template #reg>
-    <nav class="navbar">
+    <nav class="navbar position-fixed" style="width: 100%">
         <a class="navbar-brand title cursor-finger" href="/">
             <h1 class="title">Beespit</h1></a>
     </nav>
@@ -12,8 +12,9 @@
 <div class="container">
     <div class="row">
         <div class="col-md-2">
-            <ng-container *ngIf="innerWidth > 767">
-                <div class="position-fixed">
+            <ng-container *ngIf="innerWidth > 767">                
+                <div class="position-fixed" [ngClass]="{'spacing-top110': innerWidth > 767}">
+                   
                     <aside class="menu">
                         <ul class="menu-list">
                             <div class="inline" *ngIf="!isLoggedIn">
@@ -35,6 +36,8 @@
             
         </div>
         <div class="col-md-7">
+            <div [ngClass]="{'spacing-top110': innerWidth > 767}"></div>
+
             <div style="
               overflow-y:hidden;">
                 <router-outlet></router-outlet>
