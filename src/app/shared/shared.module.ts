@@ -19,6 +19,7 @@ import { CommentComponent } from './components/comment/comment.component';
 import { ReplyComponent } from './components/reply/reply.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { MentionModule } from 'angular-mentions';
+import { CommentResponseComponent } from './components/comment-response/comment-response.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { MentionModule } from 'angular-mentions';
     CommentComponent,
     ReplyComponent,
     LoadingComponent,
+    CommentResponseComponent,
   ],
   imports: [
     CommonModule,

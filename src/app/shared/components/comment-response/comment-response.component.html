@@ -1,0 +1,26 @@
+<div class="card">
+    <header class="card-header">
+        <article class="media">
+            <div class="media-left">
+                <figure class="image is-48x48" *ngIf="data.user.photoUrl !==''">
+                    <img src="{{baseUrl}}{{data.user?.photoUrl}}">
+                </figure>
+                <figure class="image is-48x48" *ngIf="data.user.photoUrl ===''">
+                    <img src="{{defaultImage}}">
+                </figure>
+            </div>
+            <div class="media-content">
+                <strong>{{ data.user?.displayname}} 
+                    <a [routerLink]="['/p', data.user.handle ]">{{data.user.handle }}</a>
+                    <span class="badge">{{ data.type | titlecase }} comment</span></strong>
+                  <br>
+                  <div [innerHTML]="data.reply"></div>
+                  <br>
+            </div>
+        </article>
+    </header>
+    <div class="card-content">
+        <app-poll-form [hideHeader]="true" [disableReqVote]="true">
+        </app-poll-form>
+    </div>
+</div>

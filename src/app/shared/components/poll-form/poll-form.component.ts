@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { ArticleService } from '../../services/article.service';
@@ -26,7 +26,10 @@ export class PollFormComponent implements OnInit, OnDestroy{
     
     this.submitArticle.controls['comment'].setValue(comment)
 }
-  
+  @Input() hideHeader: boolean = false;
+  @Input() disableReqVote: boolean = false;
+  @Input() replyCommentObj: {}
+
   submitArticle: FormGroup;
   brokenUrl: boolean = false;
 
@@ -82,9 +85,10 @@ export class PollFormComponent implements OnInit, OnDestroy{
     }
     const urlRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
 
+    const disableReq = this.disableReqVote ? null: Validators.required;
     this.submitArticle = new FormGroup({
-      'url': new FormControl(null, [Validators.required, Validators.pattern(urlRegex)]),
-      'real': new FormControl(null, [Validators.required]),
+      'url': new FormControl(null, [disableReq, Validators.pattern(urlRegex)]),
+      'real': new FormControl(null, [disableReq]),
       'hashtags': new FormControl(null, []),
       'mention': new FormControl(null, []),
       'comment': new FormControl(null, []),

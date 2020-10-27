@@ -2,7 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
+import { SignupPageComponent } from 'src/app/signup-page/signup-page.component';
 import { ArticleService } from '../../services/article.service';
+import { AuthService } from '../../services/auth.service';
+import { CommentResponseComponent } from '../comment-response/comment-response.component';
 import { CommentComponent } from '../comment/comment.component';
 
 @Component({
@@ -18,7 +21,8 @@ export class ReplyComponent implements OnInit {
   constructor(
     private route: Router,
     private articleSerivce: ArticleService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -31,14 +35,22 @@ export class ReplyComponent implements OnInit {
   }
 
   openDialogComment() {
-    const dialogRef = this.dialog.open(CommentComponent, {
-      width: '250px',
-      data: {article: this.metaTags}
-    });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+    if (this.authService.isLoggedIn()) {
+      const dialogRef = this.dialog.open(CommentResponseComponent, {
+        width: '500px',
+        panelClass: 'no-padding',
+        data: this.oneComment
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+      });
+    } else {
+      this.dialog.open(SignupPageComponent, {
+        width: '500px',
+        panelClass: 'no-padding',
+      });
+    }
   }
 
   articleDetails() {

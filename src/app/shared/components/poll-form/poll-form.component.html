@@ -1,5 +1,5 @@
 <div>
-    <h4 class="title is-4">
+    <h4 class="title is-4" *ngIf="!hideHeader">
         SPIT
     </h4>
     <div class="field">
@@ -10,13 +10,12 @@
         [mentionConfig]="mentionConfig"
         (searchTerm)="parseText($event)"
         (closed)="mentionClose()"
-        [disabled]="!isLoggedIn"
         (input)="textInput = $event.target.value"
         ></textarea>
     </div>
 
-    <p class="help is-danger" *ngIf="!isLoggedIn">You need to login to submit.</p>
-    <p class="help is-danger" *ngIf="!submitArticle.valid && isLoggedIn">Url and vote is required.</p>
+    <p class="help is-danger" *ngIf="!submitArticle?.valid && isLoggedIn && !disableReqVote">
+        Url and vote is required.</p>
     <div class="field is-grouped">
         <div class="control">
             <button class="button is-primary" type="submit" (click)="onSubmit()" [disabled]="!submitArticle.valid">Submit</button>
