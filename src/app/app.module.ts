@@ -27,6 +27,8 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileModule } from './profile/profile.module';
 import { UnauthorisedRequestInterceptor } from './shared/guards/auth-intercept.service';
+import { AboutComponent } from './pages/about/about.component';
+import { TermsComponent } from './pages/terms/terms.component';
 
 
 @NgModule({
@@ -41,6 +43,8 @@ import { UnauthorisedRequestInterceptor } from './shared/guards/auth-intercept.s
     EditTaskComponent,
     AccountComponent,
     NotificationsComponent,
+    AboutComponent,
+    TermsComponent,
   ],
   imports: [
     BrowserModule,

@@ -20,6 +20,10 @@
           <li><a class="cursor-finger" href="/">Home</a></li>
           <li><a class="cursor-finger" href="/signup">Signup</a></li>
           <li><a href="/login">Login</a></li>
+          <li>&nbsp;</li>
+          <li>&nbsp;</li>
+          <li><a [routerLink]="['/about']">About</a></li>
+          <li><a [routerLink]="['/terms']">Terms</a></li>
         </div>
 
         <div class="inline" *ngIf="isLoggedIn">
