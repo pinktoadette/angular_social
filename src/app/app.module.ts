@@ -26,6 +26,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileModule } from './profile/profile.module';
+import { UnauthorisedRequestInterceptor } from './shared/guards/auth-intercept.service';
 
 
 @NgModule({
@@ -58,7 +59,14 @@ import { ProfileModule } from './profile/profile.module';
   providers: [
     AuthGuard,
     UserResolver,
-    { provide: HTTP_INTERCEPTORS, useClass: WebReqInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, 
+      useClass: WebReqInterceptor, 
+      multi: true },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: UnauthorisedRequestInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

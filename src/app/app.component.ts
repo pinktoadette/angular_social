@@ -2,6 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PollFormComponent } from './shared/components/poll-form/poll-form.component';
 import { AuthService } from './shared/services/auth.service';
+import { SignupPageComponent } from './signup-page/signup-page.component';
 
 @Component({
   selector: 'app-root',
@@ -31,13 +32,21 @@ export class AppComponent implements OnInit{
   }
 
   openForm() {
-    const dialogRef = this.dialog.open(PollFormComponent, {
-      width: '100%',
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+    if (this.auth.isLoggedIn()) {
+      const dialogRef = this.dialog.open(PollFormComponent, {
+        width: '100%',
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+      });
+    } else {
+      const dialogRef = this.dialog.open(SignupPageComponent, {
+        width: '100%',
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+      });
+    }
   }
 
   logout() {
