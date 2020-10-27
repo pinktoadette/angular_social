@@ -39,6 +39,10 @@ export class AuthService {
     )
   }
 
+  checkHandle(handle) {
+   return this.webService.get('register/handle', {handle})
+  }
+
   logout() {
     this.loggedIn.next(false);
     this.removeSession();

@@ -20,7 +20,4 @@ export class ProfileService {
     return this.webReqService.post('account/view',{id});
   }
 
-  checkHandleExist(handle) {
-    return this.webReqService.get('account/handle_checks', {handle})
-  }
 }

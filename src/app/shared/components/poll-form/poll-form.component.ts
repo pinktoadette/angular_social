@@ -2,7 +2,7 @@ import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } fro
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { ArticleService } from '../../services/article.service';
-import { take } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 import { MatAutocomplete } from '@angular/material/autocomplete';
 import { AuthService } from '../../services/auth.service';
 
@@ -58,11 +58,13 @@ export class PollFormComponent implements OnInit, OnDestroy{
     private hashtagService: ArticleService,
     private authService: AuthService
   ) { 
-    this.isLoggedIn = this.authService.isLoggedIn();
-
   }
 
   ngOnInit(): void {
+    this.authService.loggedIn.pipe(takeUntil(this._unsubscribe)).subscribe(log=>{
+      this.isLoggedIn = log
+    });
+
     this.mentionConfig = {
       mentions: [
         {

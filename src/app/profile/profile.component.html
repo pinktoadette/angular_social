@@ -1,8 +1,15 @@
 <br>&nbsp;
 <div class="container" style="height: 100%">
-  <figure>
-    <img src="https://bulma.io/images/placeholders/128x128.png">
-  </figure>
+  <ng-container *ngIf="profile?.photoUrl; else nophoto">
+    <figure class="image rounded is-128x128">
+      <img [src]="baseUrl + profile.photoUrl">
+    </figure>
+  </ng-container>
+  <ng-template #nophoto>
+    <figure class="image rounded is-128x128">
+      <img [src]="default_image">
+    </figure>
+  </ng-template>
   <br>@{{ profileHandle }}
   <br>
   <button class="button is-primary is-pulled-right cursor-finger" *ngIf="userHandle !== profileHandle">Follow</button>

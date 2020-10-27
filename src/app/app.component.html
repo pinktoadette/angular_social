@@ -23,7 +23,7 @@
                                 <li><a [routerLink]="['/login']">Login</a></li>
                             </div>
     
-                            <div class="inline" *ngIf="isLoggedIn">
+                            <div class="inline" *ngIf="isLoggedIn && handle">
                                 <li><a href="/">Home</a></li>
                                 <li *ngIf="handle"><a [routerLink]="['/p', handle]">Profile</a></li>
                                 <li><a [routerLink]="['/notifications']">Notifications</a></li>

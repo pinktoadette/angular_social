@@ -149,3 +149,9 @@ html, body {
 .cursor-finger {
     cursor: pointer;
 }
+
+.rounded img{
+    border-radius: 100px;
+    max-height: 128px;
+    width: auto;
+}

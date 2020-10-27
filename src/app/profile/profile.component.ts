@@ -2,8 +2,10 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { constants } from '../shared/constants';
 import { AuthService } from '../shared/services/auth.service';
 import { ProfileService } from '../shared/services/profile.service';
+import { UtilityService } from '../shared/services/utility.service';
 
 @Component({
   selector: 'app-profile',
@@ -23,14 +25,21 @@ export class ProfileComponent implements OnInit, OnDestroy {
     'comments': 0
   }
 
+  baseUrl: string;
+  default_image = constants.default_img;
+
+
   private _unsubscribe = new Subject();
   constructor(
     private profileService: ProfileService,
     private authService: AuthService,
+    private utilityService: UtilityService
   ) { 
   }
 
   ngOnInit(): void {
+    this.baseUrl = this.utilityService.s3Url;
+
     this.loading = true;
     const a = window.location.href;
     this.profileHandle = a.split('/p/')[1];
@@ -39,7 +48,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.profileService.getProfilePost(this.profileHandle).pipe(takeUntil(this._unsubscribe)).subscribe(profile =>{
       this.profile = profile
       this.loading = false
-      this.stats['posted'] = profile['article'].length
+      this.stats['posted'] = !!profile && profile['article'] ? profile['article'].length : 0
     })
   }
 

@@ -2,7 +2,16 @@
   <article class="media">
     <figure class="media-left">
       <p class="image is-48x48" *ngIf="hasComment">
-        <img src="https://bulma.io/images/placeholders/96x96.png">
+        <ng-container *ngIf="showComment?.user?.photoUrl; else nophoto">
+          <figure class="image rounded is-48x48">
+            <img [src]="baseUrl + showComment.user.photoUrl">
+          </figure>
+        </ng-container>
+        <ng-template #nophoto>
+          <figure class="image rounded is-48x48">
+            <img [src]="default_image">
+          </figure>
+        </ng-template>
       </p>
     </figure>
 

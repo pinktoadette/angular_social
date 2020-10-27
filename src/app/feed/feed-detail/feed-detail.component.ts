@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 import { CommentComponent } from 'src/app/shared/components/comment/comment.component';
+import { constants } from 'src/app/shared/constants';
 import { Article } from 'src/app/shared/models/article.model';
 import { ArticleService } from 'src/app/shared/services/article.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -24,6 +25,8 @@ export class FeedDetailComponent implements OnInit, OnDestroy {
   showComment: {}
   isLike: boolean = false;
   metaTags: any;
+  baseUrl = constants.aws_s3;
+  default_image = constants.default_img
 
   private _unsubscribe = new Subject<any>();
   

@@ -1,8 +1,17 @@
 <br>&nbsp;
 <form [formGroup]="submitProfile" (ngSubmit)="onSubmit()">
   <label>
-  <img src="https://bulma.io/images/placeholders/128x128.png">
-  <input type="file" name="myfile" style="display:none">
+  <ng-container *ngIf="userProfile?.photoUrl; else nophoto">
+    <figure class="image rounded is-128x128">
+      <img [src]="baseUrl + userProfile.photoUrl">
+    </figure>
+  </ng-container>
+  <ng-template #nophoto>
+    <figure class="image rounded is-128x128">
+      <img [src]="default_image">
+    </figure>
+  </ng-template>
+  <input type="file" name="myfile" style="display:none" (change)="upload($event.target.files)">
 </label>
 
 <div>
@@ -24,13 +33,16 @@
   <div class="field">
     <label class="label">Handle</label>
     <div class="control has-icons-left has-icons-right">
-      <input class="input is-success" type="text" (change)="checkHandle()" [value]="userProfile?.handle" formControlName="handle">
+      <input class="input is-success" type="text" [value]="userProfile?.handle" formControlName="handle">
       <span class="icon is-small is-left">
         <i class="fas fa-at"></i>
       </span>
     </div>
-    <p class="help is-danger" *ngIf="(!submitProfile.controls['handle'].valid && 
-    submitProfile.controls['handle']?.touched && handleUnavailable)">Handle is unavailable</p>
+    <p class="help is-danger" *ngIf="submitProfile.controls['handle'].touched && 
+    submitProfile.controls.handle.errors">
+            Requires at least 3 characters</p>
+            <p class="help is-danger" *ngIf="handleUnavailable">
+            Handle already exists</p>
   </div>
   
   <div class="field">
@@ -58,9 +70,13 @@
     && submitProfile.controls['password']?.touched)">Password is invalid</p>
   </div>
   
+  
+  <p class="help is-success">{{ message }}</p>
+
   <div class="field is-grouped">
     <div class="control">
-      <button class="button is-link">Update</button>
+      <button class="button is-success">Update</button>
     </div>
   </div>
+
   </form>

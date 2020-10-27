@@ -12,7 +12,7 @@
           </span>
         </p>
         <p class="help is-danger" *ngIf="registerForm.controls['handle'].touched && 
-          registerForm.get('handle').hasError('handle')">
+          registerForm.controls.handle.errors">
             Requires at least 3 characters</p>
             <p class="help is-danger" *ngIf="handleExists">
             Handle already exists</p>
@@ -55,11 +55,12 @@
       <div class="field" style="display: flex; justify-content: flex-end;">
         <p class="control">
           <button class="button is-success has-text-white" 
-          [disabled]="!registerForm.valid && registerForm.get('isAgreed').value === false " >
+          [disabled]="!registerForm.valid && !registerForm.controls.isAgreed.value" >
             Sign up
           </button>
         </p>
       </div>
+      <p class="help is-danger">{{message}}</p>
       <br>
 
     </form>
