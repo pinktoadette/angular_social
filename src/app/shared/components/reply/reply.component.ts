@@ -18,6 +18,7 @@ export class ReplyComponent implements OnInit {
   @Input() metaTags;
 
   articleInfo;
+  response: string;
   constructor(
     private route: Router,
     private articleSerivce: ArticleService,
@@ -28,9 +29,9 @@ export class ReplyComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  likeComment() {
-    this.articleSerivce.likeItem({articleId: this.metaTags._id}).pipe(take(1)).subscribe(response => {
-      console.log(response)
+  likeComment(response) {
+    this.articleSerivce.likeItem({commentId: this.oneComment._id, response}).pipe(take(1)).subscribe(() => {
+      this.response = response
     })
   }
 

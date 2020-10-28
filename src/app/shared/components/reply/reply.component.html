@@ -6,7 +6,10 @@
       <div [innerHTML]="oneComment.reply"></div>
       <br>
   </div>
-  <small class="response-likes"><a (click)="likeComment()">Like</a> · 
+  <small class="response-likes wrapper">
+    {{oneComment.countLikes}} Feedback  · 
+    <a (click)="likeComment('yes')" [ngClass]="{'like': oneComment?.likes?.response === 'yes'}"> Agree </a> 
+    <a (click)="likeComment('no')" class="btn-no"  [ngClass]="{'like': oneComment?.likes?.response === 'no' }"> Disagree</a> · 
     <a (click)="openDialogComment()">Reply</a> 
       {{ oneComment?.submittedDate | date: 'MM-dd-yy' }}
   </small>

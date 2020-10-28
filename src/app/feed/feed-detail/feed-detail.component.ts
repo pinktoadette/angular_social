@@ -59,7 +59,7 @@ export class FeedDetailComponent implements OnInit, OnDestroy {
     })
   }
   getComments(){ 
-    this.articleService.getArticleTopComment(this.articleInfo._id).pipe(takeUntil(this._unsubscribe)).subscribe(response =>{
+    this.articleService.getArticleTopComment({articleId: this.articleInfo._id, uid: this.authService.getUserId()}).pipe(takeUntil(this._unsubscribe)).subscribe(response =>{
       if (response['user']) {
         this.showComment = response;
         this.hasComment = true;

@@ -1,0 +1,17 @@
+@import 'src/main-styles.scss';
+
+.wrapper:hover .btn-no {
+    display: inline-block;
+    &:before {
+        content: " · ";
+    }
+  }
+
+.btn-no{
+    display: none
+}
+
+.like {
+    font-weight: 600;
+    color: $strong-pink!important;
+}

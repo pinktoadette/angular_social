@@ -29,7 +29,7 @@ export class ArticleService {
   }
 
   getArticleTopComment(articleId) {
-    return this.webReqService.get('articles/top_comment', {articleId})
+    return this.webReqService.get('articles/top_comment', {...articleId})
   }
 
   voteArticlePoll(articleId, real) {
@@ -49,7 +49,7 @@ export class ArticleService {
   }
 
   likeItem(item: Object) {
-    return this.webReqService.post('social/likes', {item}).pipe(tap(data => data))
+    return this.webReqService.post('social/likes', {...item}).pipe(tap(data => data))
   } 
 
   getItemLiked(item) {
