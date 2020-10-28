@@ -1,0 +1,8 @@
+@import 'src/main-styles';
+
+:host::ng-deep  {
+    image-cropper{
+        width: 200px;
+        height: 200px;
+    }
+}

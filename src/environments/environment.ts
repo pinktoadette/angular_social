@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   API_URL: 'http://localhost:8080/api/v1',
+  AWS_BUCKET_NAME: 'buzzspit'
 };
 
 /*

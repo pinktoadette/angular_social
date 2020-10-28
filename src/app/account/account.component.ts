@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Buffer } from 'buffer';
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 import { constants } from '../shared/constants';
@@ -20,6 +21,11 @@ export class AccountComponent implements OnInit, OnDestroy {
   photoUrl: string;
   baseUrl: string;
   default_image = constants.default_img;
+
+  fileReceived: any;
+  isFileChange: boolean = false;
+  showConfirmCrop: boolean =false;
+  croppedInfo: {}
 
   private _unsubscribe = new Subject();
   constructor(
@@ -67,17 +73,53 @@ export class AccountComponent implements OnInit, OnDestroy {
     })
   }
 
-  upload(file) {
+  upload() {
     const userId = this.userProfile._id;
     const oldPhoto = this.userProfile.photoUrl
-    this.utilityService.uploadFile(userId, file[0], 'user/images/').subscribe(result=>{
+
+    this.utilityService.uploadBufferFile(userId, this.croppedInfo['buff'], 'user/images/', this.croppedInfo['fileType']).subscribe(result=>{
       this.userProfile['photoUrl'] =  result['key']
     }, (error)=> {console.log(error)},
     ()=>{
       this.profileService.updateAccount({photoUrl: this.userProfile['photoUrl']}).pipe(take(1)).subscribe(res=>{
-        console.log(res)
+      }, (error)=> {console.log(error)},
+      ()=>{
+        this.utilityService.deleteFile(oldPhoto).pipe(take(1)).subscribe(del=>{
+        })
+        this.isFileChange = false;
+        this.showConfirmCrop = false;
+        
       })
     })
+
+  }
+
+  cropperReady() {
+    this.isFileChange = true;
+  }
+
+  receiveFile(event: any) {
+    this.fileReceived = event;
+    this.isFileChange = true;
+  }
+
+  receiveError(event: any) {
+    console.log(event);
+  }
+
+  receiveCroppedImage(event: any){
+    if (event.base64) {
+      const fileType = event.base64.match(new RegExp('data:image/' + "(.*)" + ';'));
+
+      const data = event.base64.replace(/^data:image\/\w+;base64,/, '');
+      const buff = new Buffer(data, 'base64');
+
+      this.showConfirmCrop = true;
+      this.croppedInfo = {
+        buff,
+        fileType: fileType[1]
+      }
+    }
   }
 
   ngOnDestroy() {
