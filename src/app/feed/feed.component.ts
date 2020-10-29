@@ -1,4 +1,5 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Meta, Title } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 import { Article } from '../shared/models/article.model';
@@ -37,11 +38,13 @@ export class FeedComponent implements OnInit, OnDestroy {
   _unsubscribe = new Subject();
   constructor(
     private feedService: FeedService,
-    private auth: AuthService
-
+    private auth: AuthService,
+    private titleService: Title,
+    private metaService: Meta
   ) { }
 
   ngOnInit(): void {
+    this.seoTags();
     this.loading = true;
     const currDate = new Date();
 
@@ -51,6 +54,15 @@ export class FeedComponent implements OnInit, OnDestroy {
       this.loading = false;
     })
 
+  }
+
+  seoTags() {
+    this.titleService.setTitle('Falsy | Truthy - Explore');
+    this.metaService.addTags([
+      {name: 'keywords', content: 'fake news, real news, fake, real, cnn, foxnews, abc, onan, msnbc,wapo,infowars, bloomberg, cnbc,espn, youtube, facebook, twitter, sec 230'},
+      {name: 'description', content: 'Real news, real comments, real events determine by real people. FalsyTruthy is a crowdsource social media network platform.'},
+      {name: 'robots', content: 'index, follow'}
+    ]);
   }
 
   onScrollUp() {
