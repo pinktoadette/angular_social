@@ -7,9 +7,16 @@
       <br>
   </div>
   <small class="response-likes wrapper">
-    {{oneComment.countLikes}} Feedback  · 
-    <a (click)="likeComment('yes')" [ngClass]="{'like': oneComment?.likes?.response === 'yes'}"> Truthy </a> 
-    <a (click)="likeComment('no')" class="btn-no"  [ngClass]="{'like': oneComment?.likes?.response === 'no' }"> Falsy</a> · 
+    {{oneComment.countLikes}} Poll  · 
+    <ng-container *ngIf="oneComment.likes === 'no'; else default">
+      <a (click)="likeComment('no')" [ngClass]="{'dislike': oneComment?.likes === 'no'}"> Falsy </a> 
+      <a (click)="likeComment('yes')"  class="btn-no" [ngClass]="{'like': oneComment?.likes === 'yes' }"> Truthy</a> · 
+    </ng-container>
+    <ng-template #default>
+      <a (click)="likeComment('yes')" [ngClass]="{'like': oneComment?.likes === 'yes'}"> Truthy </a> 
+      <a (click)="likeComment('no')" class="btn-no"  [ngClass]="{'like': oneComment?.likes === 'no' }"> Falsy</a> · 
+    </ng-template>
+    
     <a (click)="openDialogComment()">Reply</a> 
       {{ oneComment?.submittedDate | date: 'MM-dd-yy' }}
   </small>

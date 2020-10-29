@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
@@ -6,7 +6,6 @@ import { SignupPageComponent } from 'src/app/signup-page/signup-page.component';
 import { ArticleService } from '../../services/article.service';
 import { AuthService } from '../../services/auth.service';
 import { CommentResponseComponent } from '../comment-response/comment-response.component';
-import { CommentComponent } from '../comment/comment.component';
 
 @Component({
   selector: 'app-reply',
@@ -17,6 +16,8 @@ export class ReplyComponent implements OnInit {
   @Input() oneComment
   @Input() metaTags;
   @Input() hideType = false;
+  @Output() updateResponse: EventEmitter<any> = new EventEmitter();
+
 
   articleInfo;
   response: string;
@@ -33,6 +34,7 @@ export class ReplyComponent implements OnInit {
   likeComment(response) {
     this.articleSerivce.likeItem({commentId: this.oneComment._id, response}).pipe(take(1)).subscribe(() => {
       this.response = response
+      this.updateResponse.emit(true)
     })
   }
 
@@ -46,6 +48,7 @@ export class ReplyComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
+        console.log(result)
       });
     } else {
       this.dialog.open(SignupPageComponent, {

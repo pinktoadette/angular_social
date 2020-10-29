@@ -17,7 +17,7 @@
 
     <div [ngStyle]="{'width': innerWidth > 767 || !hasComment ? 100+ '%' : innerWidth-50 + 'px'}">
     <div class="media-content" *ngIf="hasComment">
-      <app-reply [oneComment]="showComment" [metaTags]="metaTags"></app-reply>
+      <app-reply [oneComment]="showComment" [metaTags]="metaTags" (updateResponse)="update()"></app-reply>
     </div>
     <app-link-preview [linkInfo]="metaTags"></app-link-preview>
 

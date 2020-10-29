@@ -21,6 +21,7 @@ import { LoadingComponent } from './components/loading/loading.component';
 import { MentionModule } from 'angular-mentions';
 import { CommentResponseComponent } from './components/comment-response/comment-response.component';
 import { UserBoxComponent } from './components/user-box/user-box.component';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -57,5 +58,11 @@ import { UserBoxComponent } from './components/user-box/user-box.component';
     LoadingComponent,
     UserBoxComponent
   ],
+  providers: [
+    {
+      provide: MatDialogRef,
+      useValue: {}
+    }
+  ]
 })
 export class SharedModule { }

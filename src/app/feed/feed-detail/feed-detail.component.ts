@@ -47,6 +47,10 @@ export class FeedDetailComponent implements OnInit, OnDestroy {
     }
   }
 
+  update() {
+    this.getComments()
+  }
+
   getMetaTags() {
     this.articleService.getArticleMetaTags(this.articleInfo._id).pipe(takeUntil(this._unsubscribe)).subscribe((result)=>{
       this.metaTags = {...result, ...this.articleInfo};
@@ -85,7 +89,7 @@ export class FeedDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this._unsubscribe.next();
-this._unsubscribe.complete();;
+    this._unsubscribe.complete();;
   }
 
 }

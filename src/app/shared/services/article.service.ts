@@ -24,6 +24,10 @@ export class ArticleService {
     return this.webReqService.post('comment/article',{...comment}).pipe(tap(data => data))
   }
 
+  replyComment(data) {
+    return this.webReqService.post('comment/reply', {...data})
+  }
+
   getArticleMetaTags(id){
     return this.webReqService.get('articles/single', {id})
   }

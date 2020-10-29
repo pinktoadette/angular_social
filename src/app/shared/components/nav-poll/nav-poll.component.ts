@@ -12,7 +12,7 @@ import { sum, values} from 'lodash';
   styleUrls: ['./nav-poll.component.scss']
 })
 export class NavPollComponent implements OnInit {
-  @Input() articleInfo;
+  @Input() articleInfo; // reply to this article
   pollItems: Object[] = [
     { icon: 'far fa-comment', text: '', color: '', type: 'comment' },
     { icon: 'fas fa-retweet', text: '', color: '', type: 'retweet' },

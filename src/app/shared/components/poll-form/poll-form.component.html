@@ -1,7 +1,7 @@
 <div>
-    <h4 class="title is-4" *ngIf="!hideHeader">
-        SPIT
-    </h4>
+    <div class="title" *ngIf="!hideHeader">
+        Post it
+    </div>
     <div class="field">
         <p class="help is-success">Paste url, enter comment and vote. To vote use '^'</p>
         <textarea class="textarea is-warning" type="text" 
@@ -21,9 +21,9 @@
             <button class="button is-primary" type="submit" (click)="onSubmit()" [disabled]="!submitArticle.valid">Submit</button>
         </div>
     </div>
-    {{ message }}    
-        <br>
-        <br>    &nbsp;
+    <div class="row">
+        {{ message }}  
+    </div>  
 </div>
 
 

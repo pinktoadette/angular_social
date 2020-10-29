@@ -1,10 +1,11 @@
-import { Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, Inject, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { interval, Subject } from 'rxjs';
 import { ArticleService } from '../../services/article.service';
-import { take, takeUntil } from 'rxjs/operators';
+import { delay, take, takeUntil } from 'rxjs/operators';
 import { MatAutocomplete } from '@angular/material/autocomplete';
 import { AuthService } from '../../services/auth.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-poll-form',
@@ -28,7 +29,7 @@ export class PollFormComponent implements OnInit, OnDestroy{
 }
   @Input() hideHeader: boolean = false;
   @Input() disableReqVote: boolean = false;
-  @Input() replyCommentObj: {}
+  @Input() replyCommentObj; //reply to this comment
 
   submitArticle: FormGroup;
   brokenUrl: boolean = false;
@@ -58,8 +59,9 @@ export class PollFormComponent implements OnInit, OnDestroy{
   private _unsubscribe = new Subject<any>();
 
   constructor(
-    private hashtagService: ArticleService,
-    private authService: AuthService
+    private articleService: ArticleService,
+    private authService: AuthService,
+    public dialogRef: MatDialogRef<any>
   ) { 
   }
 
@@ -85,15 +87,26 @@ export class PollFormComponent implements OnInit, OnDestroy{
     }
     const urlRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
 
-    const disableReq = this.disableReqVote ? null: Validators.required;
-    this.submitArticle = new FormGroup({
-      'url': new FormControl(null, [disableReq, Validators.pattern(urlRegex)]),
-      'real': new FormControl(null, [disableReq]),
-      'hashtags': new FormControl(null, []),
-      'mention': new FormControl(null, []),
-      'comment': new FormControl(null, []),
-      'fakeType': new FormControl([])
-    });
+    if (this.disableReqVote) {
+      this.submitArticle = new FormGroup({
+        'url': new FormControl(null),
+        'real': new FormControl(null),
+        'hashtags': new FormControl(null, []),
+        'mention': new FormControl(null, []),
+        'comment': new FormControl(null, []),
+        'fakeType': new FormControl([])
+      });
+    } else {
+      this.submitArticle = new FormGroup({
+        'url': new FormControl(null, [Validators.required,Validators.pattern(urlRegex)]),
+        'real': new FormControl(null, [Validators.required]),
+        'hashtags': new FormControl(null, []),
+        'mention': new FormControl(null, []),
+        'comment': new FormControl(null, []),
+        'fakeType': new FormControl([]),
+      });
+    }
+    
   }
 
   onSubmit() {
@@ -102,7 +115,21 @@ export class PollFormComponent implements OnInit, OnDestroy{
     if (this.brokenUrl) {
       this.message = "Broken url"
     } else {
-      this.hashtagService.submitArticle({...this.submitArticle.value, hashtags: this.hashtags}).pipe(take(1)).subscribe(result=> {
+      this.publish()
+      
+    }
+  }
+
+  publish() {
+    let sub = {...this.submitArticle.value}
+    if (this.replyCommentObj) {
+      sub = {...sub, commentId: this.replyCommentObj['_id']}
+      this.articleService.replyComment(sub).pipe(delay(2000), take(1)).subscribe(response=>{
+        this.message = "Submitted"
+        this.dialogRef.close()
+      })
+    } else {
+      this.articleService.submitArticle(sub).pipe(delay(2000), take(1)).subscribe(result=> {
         this.submitArticle.reset();
         this.message = "Submitted"
         this.textInput = '';
@@ -125,7 +152,7 @@ export class PollFormComponent implements OnInit, OnDestroy{
     
     if (text.includes('#') ){
       const startFinding= text.split('#')[1]
-      this.hashtagService.getHashTags(startFinding).subscribe((response)=>{
+      this.articleService.getHashTags(startFinding).subscribe((response)=>{
           const  x = [].concat(response || [])
           const items = x.reduce((acc, ele) => {
             acc.push(ele['hashtag'])
@@ -137,7 +164,7 @@ export class PollFormComponent implements OnInit, OnDestroy{
     }
     if (text.includes('@')) {
       const findPerson = text.split('@')[1]
-      this.hashtagService.getMentions(findPerson).subscribe((response)=>{
+      this.articleService.getMentions(findPerson).subscribe((response)=>{
         const  x = [].concat(response || [])
         const items = x.reduce((acc, ele) => {
           acc.push(ele['handle'])
@@ -159,10 +186,9 @@ export class PollFormComponent implements OnInit, OnDestroy{
     
     switch(this.lastCharSelected) {
       case '#':
-        let tags = this.submitArticle.get('hashtags').value
+        let tags = this.submitArticle.get('hashtags').value || []
         const newTag = slice.split(this.lastCharSelected)[1];
         tags.push(newTag);
-        console.log(tags)
         this.submitArticle.controls['hashtags'].setValue(tags)
         break;
       case '@':
