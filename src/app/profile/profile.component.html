@@ -12,7 +12,12 @@
   </ng-template>
   <br>@{{ profileHandle }}
   <br>
-  <button class="button is-primary is-pulled-right cursor-finger" *ngIf="userHandle !== profileHandle">Follow</button>
+  <button class="button is-primary is-pulled-right cursor-finger" 
+  [ngClass]="{'is-outlined': isFollowing}"
+  *ngIf="userHandle !== profileHandle" (click)="followUser()">Follow
+  <span *ngIf="isFollowing">ing</span>
+</button>
+
   <button class="button is-primary is-pulled-right is-outlined cursor-finger" *ngIf="userHandle === profileHandle"
     [routerLink]="['/account']">Edit Profile</button>
   <br>
@@ -20,43 +25,66 @@
   <nav class="level is-mobile">
 
     <div class="level-item has-text-centered" *ngFor="let stat of stats | keyvalue">
-      <div (click)="viewChild(stat.key)" class="cursor-finger">
+      <div (click)="viewChild(stat.key)" class="cursor-finger" [ngClass]="{'selected': viewThis===stat.key}">
         <p class="heading">{{stat.key | titlecase}}</p>
         <p class="title">{{stat.value}}</p>
       </div>
     </div>
   </nav>
 
-  <div class="fa-3x centered-content" *ngIf="loading">
-    <i class="fas fa-spinner fa-pulse"></i>
-  </div>
-
-  <div class="columns" *ngIf="!loading && viewThis === 'posted'">
-    <div class="row">
-      <div class="column is-half" *ngFor="let item of profile?.article; let index = index">
-        <app-link-preview [linkInfo]="item"></app-link-preview>
-      </div>
-      <div class="is-clearfix" *ngIf="(index + 1) % 3 == 0"></div>
+  <div class="container">
+    <div class="fa-3x centered-content" *ngIf="loading">
+      <i class="fas fa-spinner fa-pulse"></i>
     </div>
-  </div>
-  <div class="columns" *ngIf="!loading && viewThis === 'following'">
-    {{viewThis}}
-  </div>
-  <div class="columns" *ngIf="!loading && viewThis === 'followers'">
-    {{viewThis}}
-  </div>
-  <div class="columns" *ngIf="!loading && viewThis === 'comments'">
-    <div class="row">
-      <div class="column is-half" *ngFor="let item of profile?.comments; let index = index">
+
+
+    <div class="columns" *ngIf="!loading && viewThis === 'posted'">
+      <div class="row">
+        <div class="column is-half" *ngFor="let item of profile?.article; let index = index">
+          <app-link-preview [linkInfo]="item"></app-link-preview>
+        </div>
+        <div class="is-clearfix" *ngIf="(index + 1) % 3 == 0"></div>
+      </div>
+    </div>
+    <div class="columns" *ngIf="!loading && viewThis === 'following'">
+      <div class="column">
         <div class="card">
           <div class="card-content">
             <div class="content">
-              <app-reply [oneComment]="item" [hideType]="true"></app-reply>
+              <app-user-box [user]="follow" *ngFor="let follow of following?.user" ></app-user-box>
             </div>
           </div>
         </div>
       </div>
-      <div class="is-clearfix" *ngIf="(index + 1) % 3 == 0"></div>
+    </div>
+    <div class="columns" *ngIf="!loading && viewThis === 'followers'">
+      <div class="column">
+        <div class="card">
+          <div class="card-content">
+            <div class="content">
+              <app-user-box [user]="follow" *ngFor="let follow of follower?.user" ></app-user-box>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="columns" *ngIf="!loading && viewThis === 'comments'">
+      <div class="row">
+        <div class="column is-half" *ngFor="let item of profile?.comments; let index = index">
+          <div class="card">
+            <div class="card-content">
+              <div class="content">
+                <app-reply [oneComment]="item" [hideType]="true"></app-reply>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="is-clearfix" *ngIf="(index + 1) % 3 == 0"></div>
+      </div>
     </div>
   </div>
+
+
+
+
 </div>

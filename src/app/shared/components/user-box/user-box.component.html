@@ -1,0 +1,35 @@
+<article class="media">
+    <figure class="media-left">
+        <p class="image is-48x48">
+          <ng-container *ngIf="user?.photoUrl; else nophoto">
+            <figure class="image rounded is-48x48 unset-margin">
+              <img [src]="baseUrl + user.photoUrl">
+            </figure>
+          </ng-container>
+          <ng-template #nophoto>
+            <figure class="image rounded is-48x48">
+              <img [src]="default_image">
+            </figure>
+          </ng-template>
+        </p>
+      </figure>
+
+    <div class="media-content">
+      <div class="content">
+        <p>
+          <strong>{{user.displayname}}</strong> <small>@{{user.handle}}</small> &nbsp; <small>Novice TruthFinder</small>
+          <br>
+          {{ user?.bio }}
+        </p>
+      </div>
+      <nav class="level is-mobile">
+        <div clas="level-item">1 Followers</div>
+        <div clas="level-item">1 Followers</div>
+        <div clas="level-item">10 Truthy</div>
+        <div clas="level-item">1 Falsy</div>
+      </nav>
+    </div>
+    <div class="media-right">
+      <button class="button is-primary cursor-finger">Follow</button>
+    </div>
+  </article>

@@ -20,6 +20,7 @@ import { ReplyComponent } from './components/reply/reply.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { MentionModule } from 'angular-mentions';
 import { CommentResponseComponent } from './components/comment-response/comment-response.component';
+import { UserBoxComponent } from './components/user-box/user-box.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { CommentResponseComponent } from './components/comment-response/comment-
     ReplyComponent,
     LoadingComponent,
     CommentResponseComponent,
+    UserBoxComponent,
   ],
   imports: [
     CommonModule,
@@ -52,7 +54,8 @@ import { CommentResponseComponent } from './components/comment-response/comment-
     NavPollComponent,
     LinkPreviewComponent,
     ReplyComponent,
-    LoadingComponent
+    LoadingComponent,
+    UserBoxComponent
   ],
 })
 export class SharedModule { }

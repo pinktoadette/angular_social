@@ -27,4 +27,20 @@ export class ProfileService {
   getUserStats(handle){
     return this.webReqService.get('profile/stats', {handle})
   }
+
+  followUser(handle, status) {
+    return this.webReqService.post('account/follow', {lookup: handle, status, type: 'user'})
+  }
+
+  handleFollowing(handle) {
+    return this.webReqService.get('account/following', {handle, type: 'user'})
+  }
+
+  handleFollowers(handle) {
+    return this.webReqService.get('account/followers', {handle})
+  }
+
+  isFollowingUser(handle) {
+    return this.webReqService.post('account/is_following', {lookup: handle, type: 'user'})
+  }
 }

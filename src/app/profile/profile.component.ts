@@ -27,7 +27,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   baseUrl: string;
   default_image = constants.default_img;
-
+  isFollowing: boolean = false;
+  followers: {}
+  following: {}
 
   private _unsubscribe = new Subject();
   constructor(
@@ -45,11 +47,23 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.userHandle = this.authService.getUserHandle()
     this.profileSubmision();
     this.getStats();
+    
+    this.getFollowers();
+
+    if (this.authService.isLoggedIn()) {
+      this.getAuthFollowing();
+    }
   }
 
   getStats() {
     this.profileService.getUserStats(this.profileHandle).pipe(take(1)).subscribe(result=>{
       this.stats = result
+    })
+  }
+
+  followUser() {
+    this.profileService.followUser(this.profileHandle, true).pipe(take(1)).subscribe(result=>{
+      this.isFollowing = result['status']
     })
   }
 
@@ -64,23 +78,43 @@ export class ProfileComponent implements OnInit, OnDestroy {
   profileComments() {
     this.loading = true;
     this.profileService.getProfileComments({handle: this.profileHandle}).subscribe(result=>{
-      console.log(result)
       this.profile['comments'] = result['results'];
       this.loading = false;
     })
   }
 
+  getFollowers(){}
+
+  getAuthFollowing(){
+    this.profileService.isFollowingUser(this.profileHandle).pipe(takeUntil(this._unsubscribe)).subscribe(result=>{
+      this.isFollowing = !!result
+    })
+  }
+
+  getFollowing() {
+    this.profileService.handleFollowing(this.profileHandle).pipe(takeUntil(this._unsubscribe)).subscribe(result=>{
+      this.following = result[0];
+    })
+  }
+
   viewChild(ele) {
     this.viewThis = ele;
-
     switch(ele){
       case('posted'):
         this.profileSubmision();
         break;
       case('comments'):
         this.profileComments();
+        break;
+      case('followers'):
+        this.getFollowers();
+        break;
+      case('following'):
+        this.getFollowing();
+        break;
       default:
-        
+        this.profileSubmision();
+        break;
     }
   }
 
