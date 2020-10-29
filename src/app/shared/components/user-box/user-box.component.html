@@ -1,4 +1,4 @@
-<article class="media">
+<article class="media" (click)="gotoProfile()"> 
     <figure class="media-left">
         <p class="image is-48x48">
           <ng-container *ngIf="user?.photoUrl; else nophoto">

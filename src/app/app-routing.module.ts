@@ -19,6 +19,7 @@ import { TermsComponent } from './pages/terms/terms.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/explore', pathMatch: 'full' },
+  { path: 'p/:handle', component: ProfileComponent },
   { path: 'login', component: LoginPageComponent },
   { path: 'signup', component: SignupPageComponent },
   { path: 'explore', component: FeedComponent},
@@ -38,7 +39,6 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     resolve: { user: UserResolver },
   },
-  { path: 'p/:handle', component: ProfileComponent },
   { path: 'about', component: AboutComponent },
   { path: 'terms', component: TermsComponent },
 

@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 import { constants } from '../shared/constants';
@@ -35,14 +35,22 @@ export class ProfileComponent implements OnInit, OnDestroy {
   constructor(
     private profileService: ProfileService,
     private authService: AuthService,
-    private utilityService: UtilityService
+    private utilityService: UtilityService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) { 
   }
 
   ngOnInit(): void {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.baseUrl = this.utilityService.s3Url;
-    const a = window.location.href;
-    this.profileHandle = a.split('/p/')[1];
+    this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
+      this.profileHandle = params['params']['handle'];
+      //business logic what changes you want on the page with this new data.
+  });
+
+    // const a = window.location.href;
+    // this.profileHandle = a.split('/p/')[1];
 
     this.userHandle = this.authService.getUserHandle()
     this.profileSubmision();
@@ -93,7 +101,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   getFollowing() {
     this.profileService.handleFollowing(this.profileHandle).pipe(takeUntil(this._unsubscribe)).subscribe(result=>{
-      this.following = result[0];
+      this.following = result;
     })
   }
 

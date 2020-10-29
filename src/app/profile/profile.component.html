@@ -51,7 +51,7 @@
         <div class="card">
           <div class="card-content">
             <div class="content">
-              <app-user-box [user]="follow" *ngFor="let follow of following?.user" ></app-user-box>
+              <app-user-box [user]="follow.user[0]" *ngFor="let follow of following" ></app-user-box>
             </div>
           </div>
         </div>
@@ -62,7 +62,7 @@
         <div class="card">
           <div class="card-content">
             <div class="content">
-              <app-user-box [user]="follow" *ngFor="let follow of follower?.user" ></app-user-box>
+              <app-user-box [user]="follow.user[0]" *ngFor="let follow of follower" ></app-user-box>
             </div>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { constants } from '../../constants';
 import { UtilityService } from '../../services/utility.service';
 
@@ -13,11 +14,15 @@ export class UserBoxComponent implements OnInit {
   default_image = constants.default_img;
   
   constructor(
-    private utilityService: UtilityService
+    private utilityService: UtilityService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     this.baseUrl = this.utilityService.s3Url;
   }
 
+  gotoProfile() {
+    this.router.navigate(['/p', this.user.handle]);
+  }
 }
