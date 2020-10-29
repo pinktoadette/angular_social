@@ -27,7 +27,7 @@
                                 <li><a [routerLink]="['/terms']">Terms</a></li>
                             </div>
     
-                            <div class="inline" *ngIf="isLoggedIn && handle">
+                            <div class="inline" *ngIf="isLoggedIn">
                                 <li><a href="/">Home</a></li>
                                 <li *ngIf="handle"><a [routerLink]="['/p', handle]">Profile</a></li>
                                 <li><a [routerLink]="['/notifications']">Notifications</a></li>

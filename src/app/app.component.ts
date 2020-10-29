@@ -1,5 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { PollFormComponent } from './shared/components/poll-form/poll-form.component';
 import { AuthService } from './shared/services/auth.service';
 import { SignupPageComponent } from './signup-page/signup-page.component';
@@ -16,8 +18,10 @@ export class AppComponent implements OnInit{
   }
   innerWidth: number;
   title = 'Crowdsource Real News';
-  isLoggedIn: boolean = false;
+  isLoggedIn: boolean;
   handle: string;
+
+  private _unsubscribe = new Subject();
 
   constructor(private auth: AuthService,
     public dialog: MatDialog
@@ -25,10 +29,13 @@ export class AppComponent implements OnInit{
   
   ngOnInit() {
     this.innerWidth = window.innerWidth;
-    this.auth.loggedIn.subscribe(val => {
+    this.auth.loggedIn.pipe(takeUntil(this._unsubscribe)).subscribe(val => {
       this.isLoggedIn = val;
     });
-    this.handle = this.auth.getUserHandle();
+
+    this.auth.handle.pipe(takeUntil(this._unsubscribe)).subscribe(handle =>{
+      this.handle = handle;
+    })
   }
 
   openForm() {

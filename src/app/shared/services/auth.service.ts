@@ -12,6 +12,7 @@ import { BehaviorSubject } from 'rxjs';
 export class AuthService {
 
   loggedIn = new BehaviorSubject<boolean>(this.isLoggedIn());
+  handle = new BehaviorSubject<string>(this.getUserHandle());
 
   constructor(private webService: WebRequestService, private router: Router, private http: HttpClient) { }
 
@@ -20,6 +21,7 @@ export class AuthService {
       shareReplay(),
       tap((res: HttpResponse<any>) => {
         this.loggedIn.next(true);
+        this.handle.next(res.body.handle);
         // the auth tokens will be in the header of this response
         this.setSession(res.body._id, res.body.handle, res.headers.get('X-Access-Token'), res.headers.get('x-refresh-token'));
       })
@@ -33,6 +35,7 @@ export class AuthService {
       tap((res: HttpResponse<any>) => {
         // the auth tokens will be in the header of this response
         this.loggedIn.next(true);
+        this.handle.next(res.body.handle);
         this.setSession(res.body._id, res.body.handle, res.headers.get('X-Access-Token'), res.headers.get('x-refresh-token'));
         console.log("Successfully signed up and now logged in!");
       })
@@ -45,6 +48,7 @@ export class AuthService {
 
   logout() {
     this.loggedIn.next(false);
+    this.handle.next('');
     this.removeSession();
     this.router.navigate(['/']);
   }
@@ -86,10 +90,10 @@ export class AuthService {
 
   private removeSession() {
     localStorage.removeItem('user-id');
-    localStorage.removeItem('handle');
     localStorage.removeItem('X-Access-Token');
     localStorage.removeItem('x-refresh-token');
     localStorage.removeItem('isLogin');
+    localStorage.removeItem('handle');
   }
 
   getNewAccessToken() {

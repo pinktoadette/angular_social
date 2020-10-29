@@ -20,4 +20,11 @@ export class ProfileService {
     return this.webReqService.post('account/view',{id});
   }
 
+  getProfileComments(handle) {
+    return this.webReqService.get('comment/user_comments', {...handle})
+  }
+
+  getUserStats(handle){
+    return this.webReqService.get('profile/stats', {handle})
+  }
 }

@@ -16,6 +16,7 @@ import { CommentComponent } from '../comment/comment.component';
 export class ReplyComponent implements OnInit {
   @Input() oneComment
   @Input() metaTags;
+  @Input() hideType = false;
 
   articleInfo;
   response: string;

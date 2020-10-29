@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 import { constants } from '../shared/constants';
 import { AuthService } from '../shared/services/auth.service';
 import { ProfileService } from '../shared/services/profile.service';
@@ -20,9 +20,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
   viewThis: String = 'posted';
   stats: {} = {
     'posted': 0,
+    'comments': 0,
     'following': 0,
-    'followers': 0,
-    'comments': 0
+    'followers': 0
   }
 
   baseUrl: string;
@@ -39,21 +39,49 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.baseUrl = this.utilityService.s3Url;
-
-    this.loading = true;
     const a = window.location.href;
     this.profileHandle = a.split('/p/')[1];
 
     this.userHandle = this.authService.getUserHandle()
+    this.profileSubmision();
+    this.getStats();
+  }
+
+  getStats() {
+    this.profileService.getUserStats(this.profileHandle).pipe(take(1)).subscribe(result=>{
+      this.stats = result
+    })
+  }
+
+  profileSubmision() {
+    this.loading = true;
     this.profileService.getProfilePost(this.profileHandle).pipe(takeUntil(this._unsubscribe)).subscribe(profile =>{
       this.profile = profile
       this.loading = false
-      this.stats['posted'] = !!profile && profile['article'] ? profile['article'].length : 0
+    }) 
+  }
+
+  profileComments() {
+    this.loading = true;
+    this.profileService.getProfileComments({handle: this.profileHandle}).subscribe(result=>{
+      console.log(result)
+      this.profile['comments'] = result['results'];
+      this.loading = false;
     })
   }
 
   viewChild(ele) {
     this.viewThis = ele;
+
+    switch(ele){
+      case('posted'):
+        this.profileSubmision();
+        break;
+      case('comments'):
+        this.profileComments();
+      default:
+        
+    }
   }
 
   ngOnDestroy() {
