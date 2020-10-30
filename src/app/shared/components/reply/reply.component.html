@@ -1,4 +1,4 @@
-<article class="media">
+<article class="media "[ngClass]="{'border-media': main}"> 
   <div class="media-left">
     <figure class="image rounded is-48x48" *ngIf="oneComment.user.photoUrl !==''">
       <img src="{{baseUrl}}{{oneComment.user?.photoUrl}}">
@@ -7,7 +7,7 @@
       <img src="{{defaultImage}}">
     </figure>
   </div>
-  <div class="media-content">
+  <div class="media-content" >
     <div class="content">
       <div (click)="articleDetails()">
         <strong>{{ oneComment.user?.displayname}}
