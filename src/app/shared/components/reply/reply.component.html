@@ -18,8 +18,7 @@
         <br>
       </div>
       
-      <app-link-preview *ngIf="metaTags" [linkInfo]="metaTags"></app-link-preview>
-
+      
       <small class="response-likes wrapper">
         {{ oneComment.likes }} {{ response }}
         {{oneComment.countLikes}} Poll ·
@@ -36,6 +35,8 @@
         <a (click)="openDialogComment()">Reply</a>
         {{ oneComment?.submittedDate | date: 'MM-dd-yy' }}
       </small>
+      <app-link-preview *ngIf="metaTags" [linkInfo]="metaTags"></app-link-preview>
+
     </div>
     <ng-container *ngIf="main">
       <app-reply [oneComment]="response" [hideType]="true" *ngFor="let response of oneComment.response"></app-reply>

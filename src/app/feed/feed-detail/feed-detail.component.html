@@ -8,6 +8,9 @@
         [metaTags]="metaTags" 
         (updateResponse)="update()"></app-reply>
     </div>
+    <div class="media-content" *ngIf="!hasComment">
+      <app-link-preview *ngIf="metaTags" [linkInfo]="metaTags"></app-link-preview>
+    </div>
     </div>    
   </article>
   
