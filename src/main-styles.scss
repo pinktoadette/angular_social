@@ -159,3 +159,24 @@ html, body {
 .space-110 {
     margin-top: 110px;
 }
+
+.wrapper:hover .btn-no {
+    display: inline-block;
+    &:before {
+        content: " · ";
+    }
+  }
+
+.btn-no{
+    display: none
+}
+
+.like {
+    font-weight: 600;
+    color: $green!important;
+}
+
+.dislike {
+    font-weight: 600;
+    color: $strong-pink!important;
+}

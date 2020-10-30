@@ -1,26 +1,13 @@
 <div>
   <article class="media">
-    <figure class="media-left">
-      <p class="image is-48x48" *ngIf="hasComment">
-        <ng-container *ngIf="showComment?.user?.photoUrl; else nophoto">
-          <figure class="image rounded is-48x48">
-            <img [src]="baseUrl + showComment.user.photoUrl">
-          </figure>
-        </ng-container>
-        <ng-template #nophoto>
-          <figure class="image rounded is-48x48">
-            <img [src]="default_image">
-          </figure>
-        </ng-template>
-      </p>
-    </figure>
 
     <div [ngStyle]="{'width': innerWidth > 767 || !hasComment ? 100+ '%' : innerWidth-50 + 'px'}">
     <div class="media-content" *ngIf="hasComment">
-      <app-reply [oneComment]="showComment" [metaTags]="metaTags" (updateResponse)="update()"></app-reply>
+      <app-reply 
+        [oneComment]="showComment" 
+        [metaTags]="metaTags" 
+        (updateResponse)="update()"></app-reply>
     </div>
-    <app-link-preview [linkInfo]="metaTags"></app-link-preview>
-
     </div>    
   </article>
   

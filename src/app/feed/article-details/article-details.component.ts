@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Location} from '@angular/common';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -14,7 +14,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   styleUrls: ['./article-details.component.scss']
 })
 export class ArticleDetailsComponent implements OnInit {
-
+  @Output() updateResponse: EventEmitter<any> = new EventEmitter();
   articleInfo: Object;
   showComment: Object;
   isLoggedIn: boolean;
@@ -42,6 +42,9 @@ export class ArticleDetailsComponent implements OnInit {
       })
     });
     
+  }
+  update() {
+    // this.updateResponse.emit(true)
   }
 
   openDialogComment() {

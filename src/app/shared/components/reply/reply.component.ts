@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { SignupPageComponent } from 'src/app/signup-page/signup-page.component';
+import { constants } from '../../constants';
 import { ArticleService } from '../../services/article.service';
 import { AuthService } from '../../services/auth.service';
 import { CommentResponseComponent } from '../comment-response/comment-response.component';
@@ -16,9 +17,11 @@ export class ReplyComponent implements OnInit {
   @Input() oneComment
   @Input() metaTags;
   @Input() hideType = false;
+  @Input() main = false;
   @Output() updateResponse: EventEmitter<any> = new EventEmitter();
-
-
+  
+  baseUrl = constants.aws_s3
+  defaultImage = constants.default_img;
   articleInfo;
   response: string;
   constructor(
