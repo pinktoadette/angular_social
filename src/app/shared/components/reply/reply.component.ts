@@ -18,12 +18,12 @@ export class ReplyComponent implements OnInit {
   @Input() metaTags;
   @Input() hideType = false;
   @Input() main = false;
-  @Output() updateResponse: EventEmitter<any> = new EventEmitter();
   
+  addComment: Object;
   baseUrl = constants.aws_s3
   defaultImage = constants.default_img;
   articleInfo;
-  response: string;
+  likes: string;
   constructor(
     private route: Router,
     private articleSerivce: ArticleService,
@@ -32,12 +32,12 @@ export class ReplyComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.likes = this.oneComment.likes;
   }
 
   likeComment(response) {
     this.articleSerivce.likeItem({commentId: this.oneComment._id, response}).pipe(take(1)).subscribe(() => {
-      this.response = response
-      this.updateResponse.emit(true)
+      this.likes = response
     })
   }
 
@@ -50,8 +50,8 @@ export class ReplyComponent implements OnInit {
         data: this.oneComment
       });
       dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-        console.log(result)
+        this.addComment = result['response']
+        debugger;
       });
     } else {
       this.dialog.open(SignupPageComponent, {

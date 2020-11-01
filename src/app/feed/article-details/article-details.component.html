@@ -10,7 +10,8 @@
           <div class="content" *ngIf="showComment">
             <app-reply 
             [oneComment]="showComment[0]" 
-            (updateResponse)="update()"
+            (updateLike)="updateLike()"
+            (newComment)="newComment()"
             [metaTags]="articleInfo"></app-reply>
           </div>
           <!-- <app-link-preview [linkInfo]="articleInfo" *ngIf="articleInfo"></app-link-preview> -->
@@ -18,9 +19,9 @@
 
       <ng-container *ngIf="showComment">
         <div *ngFor="let comment of showComment[0]?.response">
-          <app-reply 
+          <app-reply *ngIf="comment.user"
           [main]="true" 
-          (updateResponse)="update()"
+          (newComment)="newComment()"
           [oneComment]="comment" 
           [hideType]="true"></app-reply>
         </div>

@@ -18,6 +18,8 @@ export class ArticleDetailsComponent implements OnInit {
   articleInfo: Object;
   showComment: Object;
   isLoggedIn: boolean;
+  addComment: Object;
+  
   private _unsubscribe = new Subject();
 
   constructor(
@@ -43,8 +45,9 @@ export class ArticleDetailsComponent implements OnInit {
     });
     
   }
-  update() {
-    // this.updateResponse.emit(true)
+  newComment(event) {
+    this.addComment = event;
+    debugger
   }
 
   openDialogComment() {

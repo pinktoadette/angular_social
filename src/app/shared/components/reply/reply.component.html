@@ -1,9 +1,9 @@
 <article class="media "[ngClass]="{'border-media': main}"> 
   <div class="media-left">
-    <figure class="image rounded is-48x48" *ngIf="oneComment.user.photoUrl !==''">
-      <img src="{{baseUrl}}{{oneComment.user?.photoUrl}}">
+    <figure class="image rounded is-48x48" *ngIf="oneComment.user && oneComment.user.photoUrl !==''">
+      <img src="{{baseUrl}}{{oneComment.user.photoUrl}}">
     </figure>
-    <figure class="image rounded is-48x48" *ngIf="oneComment.user.photoUrl ===''">
+    <figure class="image rounded is-48x48" *ngIf="oneComment.user?.photoUrl ===''">
       <img src="{{defaultImage}}">
     </figure>
   </div>
@@ -11,7 +11,7 @@
     <div class="content">
       <div (click)="articleDetails()">
         <strong>{{ oneComment.user?.displayname}}
-          <a [routerLink]="['/p', oneComment.user.handle ]">{{oneComment.user.handle }}</a>
+          <a [routerLink]="['/p', oneComment.user.handle ]" *ngIf="oneComment.user">{{oneComment.user?.handle }}</a>
           <span class="badge" *ngIf="!hideType">{{ oneComment.type | titlecase }} comment</span></strong>
         <br>
         <div [innerHTML]="oneComment.reply"></div>
@@ -20,16 +20,15 @@
       
       
       <small class="response-likes wrapper">
-        {{ oneComment.likes }} {{ response }}
         {{oneComment.countLikes}} Poll ·
-        <ng-container *ngIf="oneComment.likes === 'no'; else default">
-          <a (click)="likeComment('no')" [ngClass]="{'dislike': oneComment?.likes === 'no'}"> Falsy </a>
-          <a (click)="likeComment('yes')" class="btn-no" [ngClass]="{'like': oneComment?.likes === 'yes' }"> Truthy</a>
+        <ng-container *ngIf="likes === 'no'; else default">
+          <a (click)="likeComment('no')" [ngClass]="{'dislike': likes === 'no'}"> Falsy </a>
+          <a (click)="likeComment('yes')" class="btn-no" [ngClass]="{'like': likes === 'yes' }"> Truthy</a>
           ·
         </ng-container>
         <ng-template #default>
-          <a (click)="likeComment('yes')" [ngClass]="{'like': oneComment?.likes === 'yes'}"> Truthy </a>
-          <a (click)="likeComment('no')" class="btn-no" [ngClass]="{'like': oneComment?.likes === 'no' }"> Falsy</a> ·
+          <a (click)="likeComment('yes')" [ngClass]="{'like': likes === 'yes'}"> Truthy </a>
+          <a (click)="likeComment('no')" class="btn-no" [ngClass]="{'like': likes === 'no' }"> Falsy</a> ·
         </ng-template>
 
         <a (click)="openDialogComment()">Reply</a>
@@ -39,7 +38,9 @@
 
     </div>
     <ng-container *ngIf="main">
-      <app-reply [oneComment]="response" [hideType]="true" *ngFor="let response of oneComment.response"></app-reply>
+      <app-reply *ngIf="addComment" [main]="true" [oneComment]="addComment" [hideType]="true"></app-reply>
+      <app-reply [oneComment]="response" 
+      [hideType]="true" *ngFor="let response of oneComment.response"></app-reply>
     </ng-container>
   </div>
 </article>

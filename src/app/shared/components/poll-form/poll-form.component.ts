@@ -55,6 +55,8 @@ export class PollFormComponent implements OnInit, OnDestroy{
   isLoggedIn: boolean;
   mentionConfig = {}  
   lastCharSelected: string;
+  loading: boolean = false;
+  input: string;
 
   private _unsubscribe = new Subject<any>();
 
@@ -110,14 +112,15 @@ export class PollFormComponent implements OnInit, OnDestroy{
   }
 
   onSubmit() {
+    this.loading = true;
     const url = this.submitArticle.value['url']
     this.brokenUrl = !this._checkUrl(url);
     if (this.brokenUrl) {
       this.message = "Broken url"
     } else {
       this.publish()
-      
     }
+    
   }
 
   publish() {
@@ -126,15 +129,19 @@ export class PollFormComponent implements OnInit, OnDestroy{
       sub = {...sub, commentId: this.replyCommentObj['_id']}
       this.articleService.replyComment(sub).pipe(delay(2000), take(1)).subscribe(response=>{
         this.message = "Submitted"
-        this.dialogRef.close()
+        this.dialogRef.close({response})
       })
     } else {
       this.articleService.submitArticle(sub).pipe(delay(2000), take(1)).subscribe(result=> {
         this.submitArticle.reset();
         this.message = "Submitted"
-        this.textInput = '';
+        this.input = "";
+        this.loading = false;
+
       }, err=>{
         this.message = err['error']['message'];
+        this.loading = false;
+
       })
     }
   }

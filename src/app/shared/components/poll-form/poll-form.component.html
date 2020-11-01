@@ -14,11 +14,12 @@
         ></textarea>
     </div>
 
-    <p class="help is-danger" *ngIf="!submitArticle?.valid && isLoggedIn && !disableReqVote">
-        Url and vote is required.</p>
+    <!-- <p class="help is-danger" *ngIf="!submitArticle?.valid && isLoggedIn && !disableReqVote">
+        Url and vote is required.</p> -->
     <div class="field is-grouped">
         <div class="control">
-            <button class="button is-primary" type="submit" (click)="onSubmit()" [disabled]="!submitArticle.valid">Submit</button>
+            <button class="button is-primary" [ngClass]="{'is-loading': loading}" 
+            type="submit" (click)="onSubmit()" [disabled]="!submitArticle.valid">Submit</button>
         </div>
     </div>
     <div class="row">
